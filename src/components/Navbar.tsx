@@ -30,7 +30,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:block">
-          <Button variant="hero" size="lg">
+          <Button variant="hero" size="lg" onClick={() => navigate("/auth")}>
             Get Started
           </Button>
         </div>
