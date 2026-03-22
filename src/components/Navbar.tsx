@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
@@ -6,6 +7,7 @@ const navLinks = ["Home", "Features", "Pricing", "Reviews", "Contact"];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b">
@@ -28,7 +30,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:block">
-          <Button variant="hero" size="lg">
+          <Button variant="hero" size="lg" onClick={() => navigate("/auth")}>
             Get Started
           </Button>
         </div>
@@ -57,7 +59,7 @@ const Navbar = () => {
                 {link}
               </a>
             ))}
-            <Button variant="hero" size="lg" className="mt-2 w-full">
+            <Button variant="hero" size="lg" className="mt-2 w-full" onClick={() => { setOpen(false); navigate("/auth"); }}>
               Get Started
             </Button>
           </div>
