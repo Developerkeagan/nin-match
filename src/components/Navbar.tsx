@@ -59,7 +59,7 @@ const Navbar = () => {
                 {link}
               </a>
             ))}
-            <Button variant="hero" size="lg" className="mt-2 w-full">
+            <Button variant="hero" size="lg" className="mt-2 w-full" onClick={() => { setOpen(false); navigate("/auth"); }}>
               Get Started
             </Button>
           </div>
