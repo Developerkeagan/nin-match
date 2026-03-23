@@ -8,6 +8,9 @@ import Auth from "./pages/Auth.tsx";
 import VerifyOTP from "./pages/VerifyOTP.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import DashboardLayout from "./components/dashboard/DashboardLayout.tsx";
+import DashboardOverview from "./pages/dashboard/DashboardOverview.tsx";
+import PlaceholderPage from "./pages/dashboard/PlaceholderPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +25,21 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/verify-otp" element={<VerifyOTP />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          
+          {/* Dashboard routes */}
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<DashboardOverview />} />
+            <Route path="jobs" element={<PlaceholderPage />} />
+            <Route path="jobs/create" element={<PlaceholderPage />} />
+            <Route path="applications" element={<PlaceholderPage />} />
+            <Route path="candidates" element={<PlaceholderPage />} />
+            <Route path="matches" element={<PlaceholderPage />} />
+            <Route path="billing" element={<PlaceholderPage />} />
+            <Route path="analytics" element={<PlaceholderPage />} />
+            <Route path="notifications" element={<PlaceholderPage />} />
+            <Route path="settings" element={<PlaceholderPage />} />
+          </Route>
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
