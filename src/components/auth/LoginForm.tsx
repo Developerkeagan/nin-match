@@ -26,7 +26,7 @@ const LoginForm = ({ role, onForgotPassword, onSignup }: LoginFormProps) => {
     setTimeout(() => {
       setLoading(false);
       toast({ title: "Logged in!", description: "Redirecting..." });
-      navigate("/");
+      navigate("/dashboard");
     }, 1500);
   };
 
