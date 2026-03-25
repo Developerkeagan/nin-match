@@ -12,6 +12,7 @@ import DashboardLayout from "./components/dashboard/DashboardLayout.tsx";
 import DashboardOverview from "./pages/dashboard/DashboardOverview.tsx";
 import PlaceholderPage from "./pages/dashboard/PlaceholderPage.tsx";
 import JobManagement from "./pages/dashboard/JobManagement.tsx";
+import CreateJob from "./pages/dashboard/CreateJob.tsx";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,7 @@ const App = () => (
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardOverview />} />
             <Route path="jobs" element={<JobManagement />} />
-            <Route path="jobs/create" element={<PlaceholderPage />} />
+            <Route path="jobs/create" element={<CreateJob />} />
             <Route path="applications" element={<PlaceholderPage />} />
             <Route path="candidates" element={<PlaceholderPage />} />
             <Route path="matches" element={<PlaceholderPage />} />
