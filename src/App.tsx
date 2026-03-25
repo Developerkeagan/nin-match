@@ -12,6 +12,7 @@ import DashboardLayout from "./components/dashboard/DashboardLayout.tsx";
 import DashboardOverview from "./pages/dashboard/DashboardOverview.tsx";
 import PlaceholderPage from "./pages/dashboard/PlaceholderPage.tsx";
 import JobManagement from "./pages/dashboard/JobManagement.tsx";
+import CreateJob from "./pages/dashboard/CreateJob.tsx";
 
 const queryClient = new QueryClient();
 
