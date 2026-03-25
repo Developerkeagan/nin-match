@@ -13,6 +13,7 @@ import DashboardOverview from "./pages/dashboard/DashboardOverview.tsx";
 import PlaceholderPage from "./pages/dashboard/PlaceholderPage.tsx";
 import JobManagement from "./pages/dashboard/JobManagement.tsx";
 import CreateJob from "./pages/dashboard/CreateJob.tsx";
+import Applications from "./pages/dashboard/Applications.tsx";
 
 const queryClient = new QueryClient();
 
