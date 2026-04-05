@@ -4,7 +4,7 @@ import {
   PlusCircle,
   Users,
   UserSearch,
-  Sparkles,
+  Megaphone,
   CreditCard,
   BarChart3,
   Bell,
