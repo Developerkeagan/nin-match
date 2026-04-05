@@ -14,6 +14,7 @@ import PlaceholderPage from "./pages/dashboard/PlaceholderPage.tsx";
 import JobManagement from "./pages/dashboard/JobManagement.tsx";
 import CreateJob from "./pages/dashboard/CreateJob.tsx";
 import Applications from "./pages/dashboard/Applications.tsx";
+import Candidates from "./pages/dashboard/Candidates.tsx";
 
 const queryClient = new QueryClient();
 
