@@ -40,7 +40,7 @@ const navItems = [
   { title: "Create Job", url: "/dashboard/jobs/create", icon: PlusCircle },
   { title: "Applications", url: "/dashboard/applications", icon: Users },
   { title: "Talent Pool", url: "/dashboard/candidates", icon: UserSearch },
-  { title: "AI Matches", url: "/dashboard/matches", icon: Sparkles },
+  { title: "Promotions", url: "/dashboard/promotions", icon: Megaphone },
   { title: "Billing", url: "/dashboard/billing", icon: CreditCard },
   { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
   { title: "Notifications", url: "/dashboard/notifications", icon: Bell },
