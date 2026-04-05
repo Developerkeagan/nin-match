@@ -41,7 +41,7 @@ export function DashboardTopNav() {
 
       <div className="flex items-center gap-3 ml-auto">
         {/* Dark mode toggle */}
-        <Button variant="ghost" size="icon" onClick={toggleTheme} className="text-muted-foreground">
+        <Button variant="ghost" size="icon" onClick={() => setDark(!dark)} className="text-muted-foreground">
           {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>
 
