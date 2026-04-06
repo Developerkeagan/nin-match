@@ -16,6 +16,7 @@ import CreateJob from "./pages/dashboard/CreateJob.tsx";
 import Applications from "./pages/dashboard/Applications.tsx";
 import Candidates from "./pages/dashboard/Candidates.tsx";
 import Promotions from "./pages/dashboard/Promotions.tsx";
+import Billing from "./pages/dashboard/Billing.tsx";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +40,7 @@ const App = () => (
             <Route path="applications" element={<Applications />} />
             <Route path="candidates" element={<Candidates />} />
             <Route path="promotions" element={<Promotions />} />
-            <Route path="billing" element={<PlaceholderPage />} />
+            <Route path="billing" element={<Billing />} />
             <Route path="analytics" element={<PlaceholderPage />} />
             <Route path="notifications" element={<PlaceholderPage />} />
             <Route path="settings" element={<PlaceholderPage />} />
