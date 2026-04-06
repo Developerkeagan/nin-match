@@ -16,6 +16,7 @@ import CreateJob from "./pages/dashboard/CreateJob.tsx";
 import Applications from "./pages/dashboard/Applications.tsx";
 import Candidates from "./pages/dashboard/Candidates.tsx";
 import Promotions from "./pages/dashboard/Promotions.tsx";
+import Billing from "./pages/dashboard/Billing.tsx";
 
 const queryClient = new QueryClient();
 
