@@ -17,6 +17,7 @@ import Applications from "./pages/dashboard/Applications.tsx";
 import Candidates from "./pages/dashboard/Candidates.tsx";
 import Promotions from "./pages/dashboard/Promotions.tsx";
 import Billing from "./pages/dashboard/Billing.tsx";
+import Analytics from "./pages/dashboard/Analytics.tsx";
 
 const queryClient = new QueryClient();
 
