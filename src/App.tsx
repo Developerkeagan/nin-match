@@ -17,6 +17,7 @@ import Applications from "./pages/dashboard/Applications.tsx";
 import Candidates from "./pages/dashboard/Candidates.tsx";
 import Promotions from "./pages/dashboard/Promotions.tsx";
 import Billing from "./pages/dashboard/Billing.tsx";
+import Analytics from "./pages/dashboard/Analytics.tsx";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +42,7 @@ const App = () => (
             <Route path="candidates" element={<Candidates />} />
             <Route path="promotions" element={<Promotions />} />
             <Route path="billing" element={<Billing />} />
-            <Route path="analytics" element={<PlaceholderPage />} />
+            <Route path="analytics" element={<Analytics />} />
             <Route path="notifications" element={<PlaceholderPage />} />
             <Route path="settings" element={<PlaceholderPage />} />
           </Route>
