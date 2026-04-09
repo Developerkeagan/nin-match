@@ -48,7 +48,7 @@ const App = () => (
             <Route path="analytics" element={<Analytics />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="profile" element={<CompanyProfile />} />
-            <Route path="settings" element={<PlaceholderPage />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
