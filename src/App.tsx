@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound.tsx";
 import DashboardLayout from "./components/dashboard/DashboardLayout.tsx";
 import DashboardOverview from "./pages/dashboard/DashboardOverview.tsx";
 import PlaceholderPage from "./pages/dashboard/PlaceholderPage.tsx";
+import Settings from "./pages/dashboard/Settings.tsx";
 import JobManagement from "./pages/dashboard/JobManagement.tsx";
 import CreateJob from "./pages/dashboard/CreateJob.tsx";
 import Applications from "./pages/dashboard/Applications.tsx";
@@ -47,7 +48,7 @@ const App = () => (
             <Route path="analytics" element={<Analytics />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="profile" element={<CompanyProfile />} />
-            <Route path="settings" element={<PlaceholderPage />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
