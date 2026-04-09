@@ -109,10 +109,10 @@ export function DashboardSidebar() {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="top" align="start" className="w-56">
-            <DropdownMenuItem onClick={() => navigate("/dashboard/settings")}>
+            <DropdownMenuItem onClick={() => navigate("/dashboard/profile")}>
               <Settings className="mr-2 h-4 w-4" /> Profile Settings
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate("/dashboard/settings")}>
+            <DropdownMenuItem onClick={() => navigate("/dashboard/profile")}>
               <Settings className="mr-2 h-4 w-4" /> Account Settings
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/dashboard/billing")}>

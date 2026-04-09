@@ -1,8 +1,9 @@
-import { Moon, Sun, User, LogOut, CreditCard, ChevronDown } from "lucide-react";
+import { Moon, Sun, User, LogOut, CreditCard, ChevronDown, Bell, Wallet } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 export function DashboardTopNav() {
   const [dark, setDark] = useState(() => {
@@ -31,7 +32,7 @@ export function DashboardTopNav() {
   }, [dark]);
 
   const handleLogout = () => {
-    toast({ title: "Logged out", description: "You have been logged out." });
+    toast.success("You have been logged out.");
     navigate("/auth");
   };
 
@@ -39,7 +40,46 @@ export function DashboardTopNav() {
     <header className="h-[70px] border-b bg-background/80 backdrop-blur-md flex items-center justify-between px-4 shrink-0 sticky top-0 z-40">
       <SidebarTrigger className="mr-2" />
 
-      <div className="flex items-center gap-3 ml-auto">
+      <div className="flex items-center gap-2 ml-auto">
+        {/* Credits */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="text-muted-foreground gap-1.5">
+              <Wallet className="h-4 w-4" />
+              <span className="text-sm font-semibold">67</span>
+              <span className="text-xs hidden sm:inline">credits</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <div className="px-3 py-2.5">
+              <p className="text-sm font-semibold">Credit Balance</p>
+              <p className="text-2xl font-bold text-primary">67</p>
+              <p className="text-xs text-muted-foreground mt-1">67 of 100 credits remaining</p>
+            </div>
+            <DropdownMenuSeparator />
+            <div className="px-3 py-2 space-y-1.5 text-xs text-muted-foreground">
+              <div className="flex justify-between"><span>Today</span><span>-5 credits</span></div>
+              <div className="flex justify-between"><span>Yesterday</span><span>-12 credits</span></div>
+              <div className="flex justify-between"><span>Apr 7</span><span>-8 credits</span></div>
+            </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => navigate("/dashboard/billing")}>
+              <CreditCard className="mr-2 h-4 w-4" /> Buy More Credits
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* Notifications */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="text-muted-foreground relative"
+          onClick={() => navigate("/dashboard/notifications")}
+        >
+          <Bell className="h-5 w-5" />
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-destructive rounded-full" />
+        </Button>
+
         {/* Dark mode toggle */}
         <Button variant="ghost" size="icon" onClick={() => setDark(!dark)} className="text-muted-foreground">
           {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -62,7 +102,7 @@ export function DashboardTopNav() {
               <p className="text-xs text-muted-foreground">hello@acmecorp.io</p>
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate("/dashboard/settings")}>
+            <DropdownMenuItem onClick={() => navigate("/dashboard/profile")}>
               <User className="mr-2 h-4 w-4" /> View Profile
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/dashboard/billing")}>
