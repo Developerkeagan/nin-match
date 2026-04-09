@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section
       id="home"
@@ -24,7 +26,7 @@ const HeroSection = () => {
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 reveal-up stagger-2">
-          <Button variant="hero" size="xl">
+          <Button variant="hero" size="xl" onClick={() => navigate("/auth")}>
             Get Started
           </Button>
           <Button

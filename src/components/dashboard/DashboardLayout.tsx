@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { DashboardTopNav } from "./DashboardTopNav";
+import { FloatingAIChat } from "./FloatingAIChat";
 import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
@@ -15,6 +16,7 @@ const DashboardLayout = () => {
           </main>
         </div>
       </div>
+      <FloatingAIChat />
     </SidebarProvider>
   );
 };
