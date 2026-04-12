@@ -15,7 +15,7 @@ const Footer = () => {
           {/* Company info */}
           <div>
             <h3 className="font-display text-xl font-bold">
-              NIN<span className="text-primary">Jobs</span>
+              Hire<span className="text-primary">On</span>
             </h3>
             <p className="mt-3 text-sm text-background/50 leading-relaxed max-w-xs">
               AI-powered job matching platform built on verified national identity. Connecting talent to opportunity across Nigeria.
@@ -64,7 +64,7 @@ const Footer = () => {
       {/* Copyright */}
       <div className="border-t border-background/10 py-6">
         <p className="text-center text-xs text-background/30">
-          © 2026 NINJobs. All rights reserved.
+          © 2026 HireOn. All rights reserved.
         </p>
       </div>
     </footer>

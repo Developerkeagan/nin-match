@@ -19,7 +19,7 @@ const HeroSection = () => {
 
       <div className="relative z-10 container text-center max-w-3xl py-24">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance reveal-up">
-          AI-Powered Job Matching with NIN Identity
+          AI-Powered Job Matching with HireOn
         </h1>
         <p className="mt-6 text-lg text-white/70 max-w-xl mx-auto text-balance reveal-up stagger-1">
           Connect your identity, skills, and opportunities seamlessly across platforms.
