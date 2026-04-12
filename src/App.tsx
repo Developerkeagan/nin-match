@@ -24,6 +24,7 @@ import CompanyProfile from "./pages/dashboard/CompanyProfile.tsx";
 import AdminLayout from "./components/admin/AdminLayout.tsx";
 import AdminOverview from "./pages/admin/AdminOverview.tsx";
 import AdminPlaceholder from "./pages/admin/AdminPlaceholder.tsx";
+import AdminUsers from "./pages/admin/AdminUsers.tsx";
 
 const queryClient = new QueryClient();
 
@@ -57,7 +58,7 @@ const App = () => (
           {/* Admin routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminOverview />} />
-            <Route path="users" element={<AdminPlaceholder />} />
+            <Route path="users" element={<AdminUsers />} />
             <Route path="companies" element={<AdminPlaceholder />} />
             <Route path="partners" element={<AdminPlaceholder />} />
             <Route path="notify" element={<AdminPlaceholder />} />
