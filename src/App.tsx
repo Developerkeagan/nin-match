@@ -21,6 +21,9 @@ import Billing from "./pages/dashboard/Billing.tsx";
 import Analytics from "./pages/dashboard/Analytics.tsx";
 import Notifications from "./pages/dashboard/Notifications.tsx";
 import CompanyProfile from "./pages/dashboard/CompanyProfile.tsx";
+import AdminLayout from "./components/admin/AdminLayout.tsx";
+import AdminOverview from "./pages/admin/AdminOverview.tsx";
+import AdminPlaceholder from "./pages/admin/AdminPlaceholder.tsx";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +52,18 @@ const App = () => (
             <Route path="notifications" element={<Notifications />} />
             <Route path="profile" element={<CompanyProfile />} />
             <Route path="settings" element={<Settings />} />
+          </Route>
+
+          {/* Admin routes */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminOverview />} />
+            <Route path="users" element={<AdminPlaceholder />} />
+            <Route path="companies" element={<AdminPlaceholder />} />
+            <Route path="partners" element={<AdminPlaceholder />} />
+            <Route path="notify" element={<AdminPlaceholder />} />
+            <Route path="settings" element={<AdminPlaceholder />} />
+            <Route path="promotions" element={<AdminPlaceholder />} />
+            <Route path="revenue" element={<AdminPlaceholder />} />
           </Route>
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

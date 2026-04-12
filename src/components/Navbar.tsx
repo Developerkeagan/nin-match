@@ -13,7 +13,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b">
       <div className="container flex items-center justify-between h-[70px]">
         <a href="#" className="font-display text-xl font-bold text-foreground tracking-tight">
-          NIN<span className="text-primary">Jobs</span>
+          Hire<span className="text-primary">On</span>
         </a>
 
         {/* Desktop links */}

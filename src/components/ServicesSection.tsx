@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 const services = [
   { icon: Brain, title: "AI Job Matching", desc: "Intelligent algorithms pair your skills with the right roles instantly." },
-  { icon: Fingerprint, title: "NIN Identity System", desc: "Verified national identity ensures trust and eliminates fraud." },
+  { icon: Fingerprint, title: "Identity Verification", desc: "Verified identity ensures trust and eliminates fraud." },
   { icon: Bot, title: "Bot-Based Profiles", desc: "Create and manage your professional profile through conversational bots." },
   { icon: Globe, title: "Cross-Platform Access", desc: "One identity, many platforms — apply anywhere from a single profile." },
 ];

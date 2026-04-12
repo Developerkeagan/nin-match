@@ -25,7 +25,7 @@ const VerifyOTP = () => {
   };
 
   return (
-    <AuthLayout role="company" onRoleToggle={() => {}}>
+    <AuthLayout>
       <div className="flex flex-col items-center gap-6">
         <div className="text-center">
           <h2 className="text-2xl font-display font-bold text-foreground">

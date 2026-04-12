@@ -1,16 +1,14 @@
 import {
   LayoutDashboard,
-  Briefcase,
-  PlusCircle,
   Users,
-  UserSearch,
-  Megaphone,
-  CreditCard,
-  BarChart3,
+  Building2,
+  Handshake,
   Bell,
   Settings,
-  LogOut,
+  Megaphone,
+  DollarSign,
   ChevronUp,
+  LogOut,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useNavigate } from "react-router-dom";
@@ -35,19 +33,17 @@ import {
 import { toast } from "@/hooks/use-toast";
 
 const navItems = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard, desc: "Overview & quick stats" },
-  { title: "Job Management", url: "/dashboard/jobs", icon: Briefcase, desc: "View & manage your jobs" },
-  { title: "Create Job", url: "/dashboard/jobs/create", icon: PlusCircle, desc: "Post a new job listing" },
-  { title: "Applications", url: "/dashboard/applications", icon: Users, desc: "Review applications" },
-  { title: "Talent Pool", url: "/dashboard/candidates", icon: UserSearch, desc: "Discover matched talent" },
-  { title: "Promotions", url: "/dashboard/promotions", icon: Megaphone, desc: "Boost your job visibility" },
-  { title: "Billing", url: "/dashboard/billing", icon: CreditCard, desc: "Plans, credits & invoices" },
-  { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3, desc: "Performance insights" },
-  { title: "Notifications", url: "/dashboard/notifications", icon: Bell, desc: "Stay updated on activity" },
-  { title: "Settings", url: "/dashboard/settings", icon: Settings, desc: "Account preferences" },
+  { title: "Overview", url: "/admin", icon: LayoutDashboard, desc: "Platform analytics at a glance" },
+  { title: "Users", url: "/admin/users", icon: Users, desc: "Manage registered users" },
+  { title: "Companies", url: "/admin/companies", icon: Building2, desc: "View & manage companies" },
+  { title: "Partners", url: "/admin/partners", icon: Handshake, desc: "Partner management" },
+  { title: "Notify", url: "/admin/notify", icon: Bell, desc: "Send platform notifications" },
+  { title: "Admin Settings", url: "/admin/settings", icon: Settings, desc: "System configuration" },
+  { title: "Promotion Plans", url: "/admin/promotions", icon: Megaphone, desc: "Manage promotion tiers" },
+  { title: "Revenue Overview", url: "/admin/revenue", icon: DollarSign, desc: "Financial reports" },
 ];
 
-export function DashboardSidebar() {
+export function AdminSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const navigate = useNavigate();
@@ -60,7 +56,7 @@ export function DashboardSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r">
       <div className="h-[70px] flex items-center px-4 border-b shrink-0">
-        <a href="/dashboard" className="font-display text-xl font-bold text-foreground tracking-tight">
+        <a href="/admin" className="font-display text-xl font-bold text-foreground tracking-tight">
           {collapsed ? (
             <span className="text-primary">H</span>
           ) : (
@@ -78,7 +74,7 @@ export function DashboardSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/dashboard"}
+                      end={item.url === "/admin"}
                       className="flex items-center gap-3 px-3 py-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
                       activeClassName="bg-primary/10 text-primary font-semibold"
                     >
@@ -102,27 +98,21 @@ export function DashboardSidebar() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-3 w-full rounded-md p-2 hover:bg-accent transition-colors text-left">
-              <div className="w-8 h-8 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-bold shrink-0">
-                AC
+              <div className="w-8 h-8 rounded-full bg-destructive/15 text-destructive flex items-center justify-center text-xs font-bold shrink-0">
+                AD
               </div>
               {!collapsed && (
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-foreground truncate">Acme Corp</p>
-                  <p className="text-xs text-muted-foreground truncate">hello@acmecorp.io</p>
+                  <p className="text-sm font-semibold text-foreground truncate">Admin</p>
+                  <p className="text-xs text-muted-foreground truncate">admin@gmail.com</p>
                 </div>
               )}
               {!collapsed && <ChevronUp className="h-4 w-4 text-muted-foreground shrink-0" />}
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="top" align="start" className="w-56">
-            <DropdownMenuItem onClick={() => navigate("/dashboard/profile")}>
-              <Settings className="mr-2 h-4 w-4" /> Profile Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate("/dashboard/settings")}>
-              <Settings className="mr-2 h-4 w-4" /> Account Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate("/dashboard/billing")}>
-              <CreditCard className="mr-2 h-4 w-4" /> Subscription Details
+            <DropdownMenuItem onClick={() => navigate("/admin/settings")}>
+              <Settings className="mr-2 h-4 w-4" /> Admin Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
