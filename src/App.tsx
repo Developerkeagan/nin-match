@@ -24,6 +24,7 @@ import CompanyProfile from "./pages/dashboard/CompanyProfile.tsx";
 import AdminLayout from "./components/admin/AdminLayout.tsx";
 import AdminOverview from "./pages/admin/AdminOverview.tsx";
 import AdminPlaceholder from "./pages/admin/AdminPlaceholder.tsx";
+import AdminUsers from "./pages/admin/AdminUsers.tsx";
 
 const queryClient = new QueryClient();
 
