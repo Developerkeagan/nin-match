@@ -13,7 +13,7 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -35,15 +35,16 @@ import {
 import { toast } from "@/hooks/use-toast";
 
 const navItems = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Job Management", url: "/dashboard/jobs", icon: Briefcase },
-  { title: "Create Job", url: "/dashboard/jobs/create", icon: PlusCircle },
-  { title: "Applications", url: "/dashboard/applications", icon: Users },
-  { title: "Talent Pool", url: "/dashboard/candidates", icon: UserSearch },
-  { title: "Promotions", url: "/dashboard/promotions", icon: Megaphone },
-  { title: "Billing", url: "/dashboard/billing", icon: CreditCard },
-  { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
-  { title: "Notifications", url: "/dashboard/notifications", icon: Bell },
+  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard, desc: "Overview & quick stats" },
+  { title: "Job Management", url: "/dashboard/jobs", icon: Briefcase, desc: "View & manage your jobs" },
+  { title: "Create Job", url: "/dashboard/jobs/create", icon: PlusCircle, desc: "Post a new job listing" },
+  { title: "Applications", url: "/dashboard/applications", icon: Users, desc: "Review applications" },
+  { title: "Talent Pool", url: "/dashboard/candidates", icon: UserSearch, desc: "Discover matched talent" },
+  { title: "Promotions", url: "/dashboard/promotions", icon: Megaphone, desc: "Boost your job visibility" },
+  { title: "Billing", url: "/dashboard/billing", icon: CreditCard, desc: "Plans, credits & invoices" },
+  { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3, desc: "Performance insights" },
+  { title: "Notifications", url: "/dashboard/notifications", icon: Bell, desc: "Stay updated on activity" },
+  { title: "Settings", url: "/dashboard/settings", icon: Settings, desc: "Account preferences" },
 ];
 
 export function DashboardSidebar() {
@@ -61,9 +62,9 @@ export function DashboardSidebar() {
       <div className="h-[70px] flex items-center px-4 border-b shrink-0">
         <a href="/dashboard" className="font-display text-xl font-bold text-foreground tracking-tight">
           {collapsed ? (
-            <span className="text-primary">N</span>
+            <span className="text-primary">H</span>
           ) : (
-            <>NIN<span className="text-primary">Jobs</span></>
+            <>Hire<span className="text-primary">On</span></>
           )}
         </a>
       </div>
@@ -78,11 +79,16 @@ export function DashboardSidebar() {
                     <NavLink
                       to={item.url}
                       end={item.url === "/dashboard"}
-                      className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                      className="flex items-center gap-3 px-3 py-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
                       activeClassName="bg-primary/10 text-primary font-semibold"
                     >
                       <item.icon className="h-[18px] w-[18px] shrink-0" />
-                      {!collapsed && <span>{item.title}</span>}
+                      {!collapsed && (
+                        <div className="min-w-0">
+                          <span className="block leading-tight">{item.title}</span>
+                          <span className="block text-[11px] text-muted-foreground/60 leading-tight mt-0.5 font-normal">{item.desc}</span>
+                        </div>
+                      )}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -112,7 +118,7 @@ export function DashboardSidebar() {
             <DropdownMenuItem onClick={() => navigate("/dashboard/profile")}>
               <Settings className="mr-2 h-4 w-4" /> Profile Settings
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate("/dashboard/profile")}>
+            <DropdownMenuItem onClick={() => navigate("/dashboard/settings")}>
               <Settings className="mr-2 h-4 w-4" /> Account Settings
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/dashboard/billing")}>

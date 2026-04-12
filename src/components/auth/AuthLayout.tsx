@@ -3,11 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 interface AuthLayoutProps {
   children: ReactNode;
-  role: "company" | "admin";
-  onRoleToggle: () => void;
 }
 
-const AuthLayout = ({ children, role, onRoleToggle }: AuthLayoutProps) => {
+const AuthLayout = ({ children }: AuthLayoutProps) => {
   const navigate = useNavigate();
 
   return (
@@ -19,17 +17,11 @@ const AuthLayout = ({ children, role, onRoleToggle }: AuthLayoutProps) => {
             onClick={() => navigate("/")}
             className="font-display text-2xl font-bold text-foreground tracking-tight inline-block"
           >
-            NIN<span className="text-primary">Jobs</span>
+            Hire<span className="text-primary">On</span>
           </button>
           <p className="mt-1 text-xs uppercase tracking-widest text-muted-foreground font-medium">
-            {role === "company" ? "Company Login" : "Admin Login"}
+            Welcome back
           </p>
-          <button
-            onClick={onRoleToggle}
-            className="mt-1 text-xs text-primary hover:underline font-medium"
-          >
-            {role === "company" ? "Login as Admin" : "Login as Company"}
-          </button>
         </div>
 
         {/* Auth content */}
@@ -37,7 +29,7 @@ const AuthLayout = ({ children, role, onRoleToggle }: AuthLayoutProps) => {
 
         {/* Footer */}
         <p className="mt-10 text-center text-xs text-muted-foreground/60">
-          © 2026 NINJobs. All rights reserved.
+          © 2026 HireOn. All rights reserved.
         </p>
       </div>
     </div>

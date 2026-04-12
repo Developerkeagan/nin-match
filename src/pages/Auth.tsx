@@ -9,17 +9,11 @@ type AuthView = "login" | "signup" | "forgot";
 
 const Auth = () => {
   const [view, setView] = useState<AuthView>("login");
-  const [role, setRole] = useState<"company" | "admin">("company");
-  const navigate = useNavigate();
 
   return (
-    <AuthLayout
-      role={role}
-      onRoleToggle={() => setRole(role === "company" ? "admin" : "company")}
-    >
+    <AuthLayout>
       {view === "login" && (
         <LoginForm
-          role={role}
           onForgotPassword={() => setView("forgot")}
           onSignup={() => setView("signup")}
         />
