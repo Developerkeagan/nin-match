@@ -24,6 +24,7 @@ import CompanyProfile from "./pages/dashboard/CompanyProfile.tsx";
 import AdminLayout from "./components/admin/AdminLayout.tsx";
 import AdminOverview from "./pages/admin/AdminOverview.tsx";
 import AdminPlaceholder from "./pages/admin/AdminPlaceholder.tsx";
+import AdminPartners from "./pages/admin/AdminPartners.tsx";
 import AdminUsers from "./pages/admin/AdminUsers.tsx";
 import AdminCompanies from "./pages/admin/AdminCompanies.tsx";
 
@@ -61,7 +62,7 @@ const App = () => (
             <Route index element={<AdminOverview />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="companies" element={<AdminCompanies />} />
-            <Route path="partners" element={<AdminPlaceholder />} />
+            <Route path="partners" element={<AdminPartners />} />
             <Route path="notify" element={<AdminPlaceholder />} />
             <Route path="settings" element={<AdminPlaceholder />} />
             <Route path="promotions" element={<AdminPlaceholder />} />
