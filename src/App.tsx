@@ -28,6 +28,7 @@ import AdminNotify from "./pages/admin/AdminNotify.tsx";
 import AdminPartners from "./pages/admin/AdminPartners.tsx";
 import AdminUsers from "./pages/admin/AdminUsers.tsx";
 import AdminCompanies from "./pages/admin/AdminCompanies.tsx";
+import AdminSettings from "./pages/admin/AdminSettings.tsx";
 
 const queryClient = new QueryClient();
 
@@ -65,7 +66,7 @@ const App = () => (
             <Route path="companies" element={<AdminCompanies />} />
             <Route path="partners" element={<AdminPartners />} />
             <Route path="notify" element={<AdminNotify />} />
-            <Route path="settings" element={<AdminPlaceholder />} />
+            <Route path="settings" element={<AdminSettings />} />
             <Route path="promotions" element={<AdminPlaceholder />} />
             <Route path="revenue" element={<AdminPlaceholder />} />
           </Route>
