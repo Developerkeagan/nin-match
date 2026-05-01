@@ -99,7 +99,8 @@ export function DashboardSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t p-3">
+      <SidebarFooter className="border-t p-3 space-y-2">
+        <DashboardSwitcher />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-3 w-full rounded-md p-2 hover:bg-accent transition-colors text-left">
