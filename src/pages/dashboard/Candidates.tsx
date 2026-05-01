@@ -86,6 +86,17 @@ export default function Candidates() {
   const [selectedTalent, setSelectedTalent] = useState<typeof mockTalents[0] | null>(null);
   const [shortlisted, setShortlisted] = useState<number[]>([]);
 
+  // Advanced search
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [advCategories, setAdvCategories] = useState<string[]>([]);
+  const [advJobTypes, setAdvJobTypes] = useState<string[]>([]);
+  const [advMinScore, setAdvMinScore] = useState<number>(0);
+  const [advVerifiedOnly, setAdvVerifiedOnly] = useState(false);
+  const [advKeywords, setAdvKeywords] = useState("");
+  const [appliedAdv, setAppliedAdv] = useState<{
+    categories: string[]; jobTypes: string[]; minScore: number; verifiedOnly: boolean; keywords: string;
+  }>({ categories: [], jobTypes: [], minScore: 0, verifiedOnly: false, keywords: "" });
+
   const filtered = useMemo(() => {
     let results = [...mockTalents];
 
