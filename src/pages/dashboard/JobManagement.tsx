@@ -348,6 +348,93 @@ const JobManagement = () => {
         </>
       )}
 
+      {/* Job Detail Sheet */}
+      <Sheet open={!!viewJob} onOpenChange={(open) => !open && setViewJob(null)}>
+        <SheetContent className="w-full sm:max-w-lg overflow-y-auto rounded-none">
+          {viewJob && (
+            <>
+              <SheetHeader className="pb-4 border-b">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <SheetTitle className="text-xl">{viewJob.title}</SheetTitle>
+                    <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
+                      <MapPin className="h-3.5 w-3.5" /> {viewJob.location}
+                    </div>
+                  </div>
+                  <Badge variant="outline" className={`rounded-none ${statusColor[viewJob.status]}`}>
+                    {viewJob.status}
+                  </Badge>
+                </div>
+              </SheetHeader>
+
+              <div className="mt-5 space-y-5">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="border p-3">
+                    <p className="text-[10px] text-muted-foreground uppercase">Type</p>
+                    <p className="text-sm font-semibold">{viewJob.type}</p>
+                  </div>
+                  <div className="border p-3">
+                    <p className="text-[10px] text-muted-foreground uppercase">Work Mode</p>
+                    <p className="text-sm font-semibold">{viewJob.workMode}</p>
+                  </div>
+                  <div className="border p-3 flex items-center gap-2">
+                    <UsersIcon className="h-4 w-4 text-primary" />
+                    <div>
+                      <p className="text-[10px] text-muted-foreground uppercase">Applications</p>
+                      <p className="text-sm font-semibold">{viewJob.applications}</p>
+                    </div>
+                  </div>
+                  <div className="border p-3 flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-primary" />
+                    <div>
+                      <p className="text-[10px] text-muted-foreground uppercase">AI Matches</p>
+                      <p className="text-sm font-semibold">{viewJob.aiMatches}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border p-3 flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  <div>
+                    <p className="text-[10px] text-muted-foreground uppercase">Posted</p>
+                    <p className="text-sm font-semibold">{formatDate(viewJob.datePosted)}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-xs font-semibold text-foreground mb-2 uppercase tracking-wide">Description</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    We are looking for an experienced {viewJob.title} to join our team. You'll work in a {viewJob.workMode.toLowerCase()} setup based in {viewJob.location}, contributing to high-impact projects in a collaborative environment.
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="text-xs font-semibold text-foreground mb-2 uppercase tracking-wide">Requirements</h4>
+                  <ul className="text-sm text-muted-foreground space-y-1.5">
+                    <li className="flex gap-2"><span className="text-primary">•</span> Proven experience in a similar role</li>
+                    <li className="flex gap-2"><span className="text-primary">•</span> Strong communication and teamwork skills</li>
+                    <li className="flex gap-2"><span className="text-primary">•</span> Ability to work independently in a {viewJob.workMode.toLowerCase()} setting</li>
+                  </ul>
+                </div>
+
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <Clock className="h-3.5 w-3.5" /> Last activity: {formatDate(viewJob.datePosted)}
+                </div>
+              </div>
+
+              <div className="flex gap-2 mt-6 pt-4 border-t">
+                <Button variant="outline" className="rounded-none flex-1" onClick={() => { setViewJob(null); navigate(`/dashboard/applications?jobId=${viewJob.id}`); }}>
+                  <UsersIcon className="h-4 w-4 mr-2" /> View Applicants
+                </Button>
+                <Button className="rounded-none flex-1" onClick={() => { const j = viewJob; setViewJob(null); handleEdit(j); }}>
+                  <Pencil className="h-4 w-4 mr-2" /> Edit
+                </Button>
+              </div>
+            </>
+          )}
+        </SheetContent>
+      </Sheet>
+
       {/* Delete confirmation */}
       <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <AlertDialogContent className="rounded-none">
