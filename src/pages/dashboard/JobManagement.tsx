@@ -281,7 +281,7 @@ const JobManagement = () => {
             {paginated.map((job) => (
               <div key={job.id} className="border border-border p-4 space-y-3">
                 <div className="flex items-start justify-between">
-                  <button onClick={() => navigate(`/dashboard/jobs/${job.id}`)} className="font-semibold text-foreground hover:text-primary transition-colors text-left">
+                  <button onClick={() => setViewJob(job)} className="font-semibold text-foreground hover:text-primary transition-colors text-left">
                     {job.title}
                   </button>
                   <Badge variant="outline" className={`rounded-none text-xs shrink-0 ml-2 ${statusColor[job.status]}`}>
@@ -301,10 +301,10 @@ const JobManagement = () => {
                   </button>
                 </div>
                 <div className="flex items-center gap-1 pt-1">
-                  <Button variant="ghost" size="sm" className="rounded-none" onClick={() => navigate(`/dashboard/jobs/${job.id}`)}>
+                  <Button variant="ghost" size="sm" className="rounded-none" onClick={() => setViewJob(job)}>
                     <Eye className="h-4 w-4 mr-1" /> View
                   </Button>
-                  <Button variant="ghost" size="sm" className="rounded-none" onClick={() => navigate(`/dashboard/jobs/${job.id}/edit`)}>
+                  <Button variant="ghost" size="sm" className="rounded-none" onClick={() => handleEdit(job)}>
                     <Pencil className="h-4 w-4 mr-1" /> Edit
                   </Button>
                   <DropdownMenu>
