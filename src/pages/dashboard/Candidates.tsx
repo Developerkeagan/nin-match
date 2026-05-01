@@ -216,7 +216,7 @@ export default function Candidates() {
     toast({ title: "Export complete", description: `${filtered.length} talents exported to spreadsheet.` });
   };
 
-  const hasFilters = search || skillFilter.length > 0 || expFilter || locationFilter;
+  const hasFilters = !!(search || skillFilter.length > 0 || expFilter || locationFilter || advFiltersActive);
 
   const toggleShortlist = (id: number) => {
     setShortlisted(prev => {
