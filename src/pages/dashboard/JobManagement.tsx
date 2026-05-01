@@ -10,7 +10,8 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Search, Plus, Eye, Pencil, MoreVertical, Briefcase, Pause, X, Copy, Trash2 } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Search, Plus, Eye, Pencil, MoreVertical, Briefcase, Pause, X, Copy, Trash2, MapPin, Calendar, Users as UsersIcon, Sparkles, Clock } from "lucide-react";
 import { toast } from "sonner";
 
 interface Job {
