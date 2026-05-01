@@ -29,6 +29,9 @@ import AdminPartners from "./pages/admin/AdminPartners.tsx";
 import AdminUsers from "./pages/admin/AdminUsers.tsx";
 import AdminCompanies from "./pages/admin/AdminCompanies.tsx";
 import AdminSettings from "./pages/admin/AdminSettings.tsx";
+import ExecutiveLayout from "./components/executive/ExecutiveLayout.tsx";
+import ExecutiveOverview from "./pages/executive/ExecutiveOverview.tsx";
+import ExecutivePlaceholder from "./pages/executive/ExecutivePlaceholder.tsx";
 
 const queryClient = new QueryClient();
 
