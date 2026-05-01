@@ -627,6 +627,116 @@ export default function Candidates() {
           )}
         </SheetContent>
       </Sheet>
+
+      {/* Advanced Search Dialog */}
+      <Dialog open={advancedOpen} onOpenChange={setAdvancedOpen}>
+        <DialogContent className="rounded-none max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="font-display flex items-center gap-2">
+              <SlidersHorizontal className="h-5 w-5 text-primary" /> Advanced Search
+            </DialogTitle>
+            <DialogDescription>
+              Refine your talent search across job categories, types, and qualifications. HireOn supports both technical and commercial roles.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-5 py-2">
+            {/* Keywords */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold uppercase tracking-wide">Keywords</Label>
+              <Input
+                placeholder="e.g. sales, IFRS, kubernetes (comma or space separated)"
+                value={advKeywords}
+                onChange={(e) => setAdvKeywords(e.target.value)}
+                className="rounded-none"
+              />
+              <p className="text-[11px] text-muted-foreground">Matches roles, skills, summaries, and education.</p>
+            </div>
+
+            {/* Job Categories */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold uppercase tracking-wide">Job Categories</Label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {categoryOptions.map(cat => {
+                  const checked = advCategories.includes(cat);
+                  return (
+                    <label key={cat} className={`flex items-center gap-2 px-3 py-2 border cursor-pointer transition-colors ${checked ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}>
+                      <Checkbox
+                        checked={checked}
+                        onCheckedChange={(v) => {
+                          setAdvCategories(prev => v ? [...prev, cat] : prev.filter(c => c !== cat));
+                        }}
+                      />
+                      <span className="text-sm">{cat}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Job Types */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold uppercase tracking-wide">Job Type</Label>
+              <div className="flex flex-wrap gap-2">
+                {jobTypeOptions.map(jt => {
+                  const checked = advJobTypes.includes(jt);
+                  return (
+                    <button
+                      key={jt}
+                      type="button"
+                      onClick={() => setAdvJobTypes(prev => checked ? prev.filter(x => x !== jt) : [...prev, jt])}
+                      className={`px-3 py-1.5 text-sm border transition-colors ${checked ? "bg-primary text-primary-foreground border-primary" : "bg-background text-muted-foreground border-border hover:border-primary/50"}`}
+                    >
+                      {jt}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Min talent score */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="text-xs font-semibold uppercase tracking-wide">Minimum Talent Score</Label>
+                <span className="text-sm font-bold text-primary">{advMinScore}%</span>
+              </div>
+              <Slider
+                value={[advMinScore]}
+                onValueChange={(v) => setAdvMinScore(v[0])}
+                min={0}
+                max={100}
+                step={5}
+              />
+            </div>
+
+            {/* Verified only */}
+            <label className="flex items-center gap-3 px-3 py-2.5 border border-border cursor-pointer hover:border-primary/50 transition-colors">
+              <Checkbox
+                checked={advVerifiedOnly}
+                onCheckedChange={(v) => setAdvVerifiedOnly(!!v)}
+              />
+              <div className="flex-1">
+                <p className="text-sm font-medium flex items-center gap-1.5">
+                  <ShieldCheck className="h-4 w-4 text-primary" /> Verified talents only
+                </p>
+                <p className="text-[11px] text-muted-foreground">Show only NIN/ID-verified profiles.</p>
+              </div>
+            </label>
+          </div>
+
+          <DialogFooter className="gap-2">
+            <Button variant="ghost" className="rounded-none" onClick={clearAdvanced}>
+              Clear
+            </Button>
+            <Button variant="outline" className="rounded-none" onClick={() => setAdvancedOpen(false)}>
+              Cancel
+            </Button>
+            <Button className="rounded-none" onClick={applyAdvanced}>
+              Apply Filters
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
