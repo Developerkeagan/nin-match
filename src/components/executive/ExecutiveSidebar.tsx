@@ -1,16 +1,15 @@
 import {
   LayoutDashboard,
-  Briefcase,
-  PlusCircle,
   Users,
-  UserSearch,
-  Megaphone,
-  CreditCard,
-  BarChart3,
-  Bell,
+  Mail,
+  Wallet,
+  CalendarDays,
+  ClipboardList,
+  TrendingUp,
   Settings,
-  LogOut,
   ChevronUp,
+  LogOut,
+  CreditCard,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useNavigate } from "react-router-dom";
@@ -33,22 +32,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/hooks/use-toast";
-import { DashboardSwitcher } from "./DashboardSwitcher";
+import { DashboardSwitcher } from "@/components/dashboard/DashboardSwitcher";
 
 const navItems = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard, desc: "Overview & quick stats" },
-  { title: "Job Management", url: "/dashboard/jobs", icon: Briefcase, desc: "View & manage your jobs" },
-  { title: "Create Job", url: "/dashboard/jobs/create", icon: PlusCircle, desc: "Post a new job listing" },
-  { title: "Applications", url: "/dashboard/applications", icon: Users, desc: "Review applications" },
-  { title: "Talent Pool", url: "/dashboard/candidates", icon: UserSearch, desc: "Discover matched talent" },
-  { title: "Promotions", url: "/dashboard/promotions", icon: Megaphone, desc: "Boost your job visibility" },
-  { title: "Billing", url: "/dashboard/billing", icon: CreditCard, desc: "Plans, credits & invoices" },
-  { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3, desc: "Performance insights" },
-  { title: "Notifications", url: "/dashboard/notifications", icon: Bell, desc: "Stay updated on activity" },
-  { title: "Settings", url: "/dashboard/settings", icon: Settings, desc: "Account preferences" },
+  { title: "Overview", url: "/executive", icon: LayoutDashboard, desc: "Company snapshot & KPIs" },
+  { title: "Workforce", url: "/executive/workforce", icon: Users, desc: "Employees & departments" },
+  { title: "Mailing", url: "/executive/mailing", icon: Mail, desc: "Internal comms & memos" },
+  { title: "Salary", url: "/executive/salary", icon: Wallet, desc: "Payroll & compensation" },
+  { title: "Attendance", url: "/executive/attendance", icon: CalendarDays, desc: "Time, leave & shifts" },
+  { title: "Performance", url: "/executive/performance", icon: TrendingUp, desc: "Reviews & goals" },
+  { title: "Tasks", url: "/executive/tasks", icon: ClipboardList, desc: "Assignments & projects" },
+  { title: "Settings", url: "/executive/settings", icon: Settings, desc: "Workspace preferences" },
 ];
 
-export function DashboardSidebar() {
+export function ExecutiveSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const navigate = useNavigate();
@@ -61,7 +58,7 @@ export function DashboardSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r">
       <div className="h-[70px] flex items-center px-4 border-b shrink-0">
-        <a href="/dashboard" className="font-display text-xl font-bold text-foreground tracking-tight">
+        <a href="/executive" className="font-display text-xl font-bold text-foreground tracking-tight">
           {collapsed ? (
             <span className="text-primary">H</span>
           ) : (
@@ -79,7 +76,7 @@ export function DashboardSidebar() {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
-                      end={item.url === "/dashboard"}
+                      end={item.url === "/executive"}
                       className="flex items-center gap-3 px-3 py-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
                       activeClassName="bg-primary/10 text-primary font-semibold"
                     >
@@ -117,14 +114,11 @@ export function DashboardSidebar() {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="top" align="start" className="w-56">
-            <DropdownMenuItem onClick={() => navigate("/dashboard/profile")}>
-              <Settings className="mr-2 h-4 w-4" /> Profile Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate("/dashboard/settings")}>
-              <Settings className="mr-2 h-4 w-4" /> Account Settings
+            <DropdownMenuItem onClick={() => navigate("/executive/settings")}>
+              <Settings className="mr-2 h-4 w-4" /> Workspace Settings
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/dashboard/billing")}>
-              <CreditCard className="mr-2 h-4 w-4" /> Subscription Details
+              <CreditCard className="mr-2 h-4 w-4" /> Billing
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">

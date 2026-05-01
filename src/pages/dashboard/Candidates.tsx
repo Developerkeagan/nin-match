@@ -9,25 +9,36 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Slider } from "@/components/ui/slider";
 import { toast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// Mock talent data
+// Mock talent data — supports both tech and commercial roles
 const mockTalents = [
-  { id: 1, name: "Adebayo Ogunlesi", role: "Backend Developer", experience: "4 years", skills: ["Node.js", "MongoDB", "Express", "Docker", "AWS"], score: 92, status: "verified", lastActive: "2 hours ago", avatar: "AO", location: "Lagos", education: "BSc Computer Science", strengths: ["Strong API design", "Cloud architecture"], summary: "Experienced backend engineer with a focus on scalable microservices." },
-  { id: 2, name: "Fatima Bello", role: "UI/UX Designer", experience: "3 years", skills: ["Figma", "Adobe XD", "Tailwind", "Prototyping"], score: 87, status: "active", lastActive: "5 hours ago", avatar: "FB", location: "Abuja", education: "BA Graphic Design", strengths: ["User research", "Design systems"], summary: "Creative designer passionate about accessible and beautiful interfaces." },
-  { id: 3, name: "Chinedu Okoro", role: "Full-Stack Developer", experience: "5 years", skills: ["React", "Node.js", "PostgreSQL", "TypeScript", "GraphQL"], score: 95, status: "verified", lastActive: "1 hour ago", avatar: "CO", location: "Lagos", education: "MSc Software Engineering", strengths: ["End-to-end delivery", "Technical leadership"], summary: "Versatile full-stack developer with experience leading engineering teams." },
-  { id: 4, name: "Amina Yusuf", role: "Data Analyst", experience: "2 years", skills: ["Python", "SQL", "Tableau", "Excel"], score: 78, status: "new", lastActive: "1 day ago", avatar: "AY", location: "Kano", education: "BSc Statistics", strengths: ["Data visualization", "Statistical analysis"], summary: "Detail-oriented analyst skilled in transforming data into insights." },
-  { id: 5, name: "Emeka Nwosu", role: "Mobile Developer", experience: "3 years", skills: ["React Native", "Flutter", "Firebase", "TypeScript"], score: 84, status: "active", lastActive: "3 hours ago", avatar: "EN", location: "Port Harcourt", education: "BSc Computer Engineering", strengths: ["Cross-platform development", "Performance optimization"], summary: "Mobile-first developer building high-performance apps." },
-  { id: 6, name: "Blessing Eze", role: "DevOps Engineer", experience: "4 years", skills: ["Docker", "Kubernetes", "AWS", "Terraform", "CI/CD"], score: 91, status: "verified", lastActive: "30 min ago", avatar: "BE", location: "Lagos", education: "BSc Information Technology", strengths: ["Infrastructure automation", "Cloud cost optimization"], summary: "DevOps specialist focused on reliable and scalable infrastructure." },
-  { id: 7, name: "Yusuf Abdullahi", role: "Frontend Developer", experience: "2 years", skills: ["React", "Vue.js", "Tailwind", "JavaScript"], score: 73, status: "active", lastActive: "6 hours ago", avatar: "YA", location: "Kaduna", education: "HND Computer Science", strengths: ["Responsive design", "Component architecture"], summary: "Frontend developer with an eye for clean, responsive interfaces." },
-  { id: 8, name: "Ngozi Okafor", role: "Product Manager", experience: "6 years", skills: ["Agile", "Jira", "User Research", "Roadmapping", "SQL"], score: 88, status: "verified", lastActive: "4 hours ago", avatar: "NO", location: "Lagos", education: "MBA", strengths: ["Strategic thinking", "Stakeholder management"], summary: "Seasoned PM driving product strategy with data-driven decisions." },
-  { id: 9, name: "Ibrahim Musa", role: "Backend Developer", experience: "1 year", skills: ["Python", "Django", "PostgreSQL"], score: 62, status: "new", lastActive: "2 days ago", avatar: "IM", location: "Abuja", education: "BSc Computer Science", strengths: ["Quick learner", "Problem solving"], summary: "Junior backend developer eager to grow in a collaborative environment." },
+  { id: 1, name: "Adebayo Ogunlesi", role: "Backend Developer", category: "Tech", jobType: "Full-time", experience: "4 years", skills: ["Node.js", "MongoDB", "Express", "Docker", "AWS"], score: 92, status: "verified", lastActive: "2 hours ago", avatar: "AO", location: "Lagos", education: "BSc Computer Science", strengths: ["Strong API design", "Cloud architecture"], summary: "Experienced backend engineer with a focus on scalable microservices.", email: "adebayo.o@example.com", phone: "+234 803 111 2233", expectedSalary: "₦650,000/mo" },
+  { id: 2, name: "Fatima Bello", role: "UI/UX Designer", category: "Design", jobType: "Full-time", experience: "3 years", skills: ["Figma", "Adobe XD", "Tailwind", "Prototyping"], score: 87, status: "active", lastActive: "5 hours ago", avatar: "FB", location: "Abuja", education: "BA Graphic Design", strengths: ["User research", "Design systems"], summary: "Creative designer passionate about accessible and beautiful interfaces.", email: "fatima.b@example.com", phone: "+234 802 222 3344", expectedSalary: "₦500,000/mo" },
+  { id: 3, name: "Chinedu Okoro", role: "Full-Stack Developer", category: "Tech", jobType: "Full-time", experience: "5 years", skills: ["React", "Node.js", "PostgreSQL", "TypeScript", "GraphQL"], score: 95, status: "verified", lastActive: "1 hour ago", avatar: "CO", location: "Lagos", education: "MSc Software Engineering", strengths: ["End-to-end delivery", "Technical leadership"], summary: "Versatile full-stack developer with experience leading engineering teams.", email: "chinedu.o@example.com", phone: "+234 805 333 4455", expectedSalary: "₦800,000/mo" },
+  { id: 4, name: "Amina Yusuf", role: "Data Analyst", category: "Tech", jobType: "Contract", experience: "2 years", skills: ["Python", "SQL", "Tableau", "Excel"], score: 78, status: "new", lastActive: "1 day ago", avatar: "AY", location: "Kano", education: "BSc Statistics", strengths: ["Data visualization", "Statistical analysis"], summary: "Detail-oriented analyst skilled in transforming data into insights.", email: "amina.y@example.com", phone: "+234 806 444 5566", expectedSalary: "₦400,000/mo" },
+  { id: 5, name: "Emeka Nwosu", role: "Mobile Developer", category: "Tech", jobType: "Full-time", experience: "3 years", skills: ["React Native", "Flutter", "Firebase", "TypeScript"], score: 84, status: "active", lastActive: "3 hours ago", avatar: "EN", location: "Port Harcourt", education: "BSc Computer Engineering", strengths: ["Cross-platform development", "Performance optimization"], summary: "Mobile-first developer building high-performance apps.", email: "emeka.n@example.com", phone: "+234 807 555 6677", expectedSalary: "₦600,000/mo" },
+  { id: 6, name: "Blessing Eze", role: "DevOps Engineer", category: "Tech", jobType: "Full-time", experience: "4 years", skills: ["Docker", "Kubernetes", "AWS", "Terraform", "CI/CD"], score: 91, status: "verified", lastActive: "30 min ago", avatar: "BE", location: "Lagos", education: "BSc Information Technology", strengths: ["Infrastructure automation", "Cloud cost optimization"], summary: "DevOps specialist focused on reliable and scalable infrastructure.", email: "blessing.e@example.com", phone: "+234 808 666 7788", expectedSalary: "₦750,000/mo" },
+  { id: 7, name: "Yusuf Abdullahi", role: "Frontend Developer", category: "Tech", jobType: "Part-time", experience: "2 years", skills: ["React", "Vue.js", "Tailwind", "JavaScript"], score: 73, status: "active", lastActive: "6 hours ago", avatar: "YA", location: "Kaduna", education: "HND Computer Science", strengths: ["Responsive design", "Component architecture"], summary: "Frontend developer with an eye for clean, responsive interfaces.", email: "yusuf.a@example.com", phone: "+234 809 777 8899", expectedSalary: "₦300,000/mo" },
+  { id: 8, name: "Ngozi Okafor", role: "Product Manager", category: "Product", jobType: "Full-time", experience: "6 years", skills: ["Agile", "Jira", "User Research", "Roadmapping", "SQL"], score: 88, status: "verified", lastActive: "4 hours ago", avatar: "NO", location: "Lagos", education: "MBA", strengths: ["Strategic thinking", "Stakeholder management"], summary: "Seasoned PM driving product strategy with data-driven decisions.", email: "ngozi.o@example.com", phone: "+234 810 888 9900", expectedSalary: "₦900,000/mo" },
+  { id: 9, name: "Ibrahim Musa", role: "Backend Developer", category: "Tech", jobType: "Internship", experience: "1 year", skills: ["Python", "Django", "PostgreSQL"], score: 62, status: "new", lastActive: "2 days ago", avatar: "IM", location: "Abuja", education: "BSc Computer Science", strengths: ["Quick learner", "Problem solving"], summary: "Junior backend developer eager to grow in a collaborative environment.", email: "ibrahim.m@example.com", phone: "+234 811 999 0011", expectedSalary: "₦150,000/mo" },
+  { id: 10, name: "Tolu Adeyinka", role: "Sales Executive", category: "Sales", jobType: "Full-time", experience: "5 years", skills: ["B2B Sales", "Negotiation", "CRM", "Lead Generation"], score: 86, status: "verified", lastActive: "1 hour ago", avatar: "TA", location: "Lagos", education: "BSc Marketing", strengths: ["Closing deals", "Client relationships"], summary: "High-performing sales executive with consistent quota over-achievement.", email: "tolu.a@example.com", phone: "+234 812 100 2233", expectedSalary: "₦550,000/mo" },
+  { id: 11, name: "Mary Johnson", role: "Customer Service Lead", category: "Customer Support", jobType: "Full-time", experience: "4 years", skills: ["Communication", "Zendesk", "CRM", "Conflict Resolution"], score: 81, status: "active", lastActive: "2 hours ago", avatar: "MJ", location: "Abuja", education: "BA English", strengths: ["Empathy", "Team coordination"], summary: "Customer service leader with proven track record in retention.", email: "mary.j@example.com", phone: "+234 813 200 3344", expectedSalary: "₦350,000/mo" },
+  { id: 12, name: "Sade Olawale", role: "Accountant", category: "Finance", jobType: "Full-time", experience: "7 years", skills: ["QuickBooks", "Excel", "IFRS", "Audit", "Tax"], score: 89, status: "verified", lastActive: "3 hours ago", avatar: "SO", location: "Lagos", education: "BSc Accounting, ICAN", strengths: ["Financial reporting", "Compliance"], summary: "Chartered accountant with strong audit and tax background.", email: "sade.o@example.com", phone: "+234 814 300 4455", expectedSalary: "₦600,000/mo" },
+  { id: 13, name: "Kunle Adebanjo", role: "Logistics Manager", category: "Operations", jobType: "Full-time", experience: "6 years", skills: ["Supply Chain", "Fleet Mgmt", "SAP", "Inventory"], score: 80, status: "active", lastActive: "5 hours ago", avatar: "KA", location: "Port Harcourt", education: "BSc Logistics", strengths: ["Route optimization", "Vendor management"], summary: "Operations professional driving efficiency across distribution networks.", email: "kunle.a@example.com", phone: "+234 815 400 5566", expectedSalary: "₦500,000/mo" },
+  { id: 14, name: "Halima Sani", role: "Marketing Manager", category: "Marketing", jobType: "Full-time", experience: "5 years", skills: ["Brand Strategy", "Meta Ads", "SEO", "Copywriting"], score: 85, status: "verified", lastActive: "1 hour ago", avatar: "HS", location: "Abuja", education: "BSc Mass Communication", strengths: ["Campaign strategy", "Analytics"], summary: "Marketing manager with strong digital and brand experience.", email: "halima.s@example.com", phone: "+234 816 500 6677", expectedSalary: "₦650,000/mo" },
 ];
 
 const skillFilters = ["Node.js", "React", "Python", "Figma", "Docker", "TypeScript", "MongoDB", "AWS"];
 const experienceFilters = ["0–2 years", "3–5 years", "6+ years"];
 const locationFilters = ["Lagos", "Abuja", "Port Harcourt", "Kano", "Kaduna"];
+const categoryOptions = ["Tech", "Design", "Product", "Sales", "Marketing", "Finance", "Operations", "Customer Support"];
+const jobTypeOptions = ["Full-time", "Part-time", "Contract", "Internship"];
 
 const scoreColor = (score: number) => {
   if (score >= 80) return "text-primary";
@@ -75,6 +86,17 @@ export default function Candidates() {
   const [selectedTalent, setSelectedTalent] = useState<typeof mockTalents[0] | null>(null);
   const [shortlisted, setShortlisted] = useState<number[]>([]);
 
+  // Advanced search
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [advCategories, setAdvCategories] = useState<string[]>([]);
+  const [advJobTypes, setAdvJobTypes] = useState<string[]>([]);
+  const [advMinScore, setAdvMinScore] = useState<number>(0);
+  const [advVerifiedOnly, setAdvVerifiedOnly] = useState(false);
+  const [advKeywords, setAdvKeywords] = useState("");
+  const [appliedAdv, setAppliedAdv] = useState<{
+    categories: string[]; jobTypes: string[]; minScore: number; verifiedOnly: boolean; keywords: string;
+  }>({ categories: [], jobTypes: [], minScore: 0, verifiedOnly: false, keywords: "" });
+
   const filtered = useMemo(() => {
     let results = [...mockTalents];
 
@@ -104,16 +126,44 @@ export default function Candidates() {
       results = results.filter(t => t.location === locationFilter);
     }
 
+    // Advanced search filters
+    if (appliedAdv.categories.length > 0) {
+      results = results.filter(t => appliedAdv.categories.includes(t.category));
+    }
+    if (appliedAdv.jobTypes.length > 0) {
+      results = results.filter(t => appliedAdv.jobTypes.includes(t.jobType));
+    }
+    if (appliedAdv.minScore > 0) {
+      results = results.filter(t => t.score >= appliedAdv.minScore);
+    }
+    if (appliedAdv.verifiedOnly) {
+      results = results.filter(t => t.status === "verified");
+    }
+    if (appliedAdv.keywords.trim()) {
+      const kws = appliedAdv.keywords.toLowerCase().split(/[, ]+/).filter(Boolean);
+      results = results.filter(t => {
+        const hay = `${t.role} ${t.summary} ${t.skills.join(" ")} ${t.education}`.toLowerCase();
+        return kws.every(kw => hay.includes(kw));
+      });
+    }
+
     if (sortBy === "best") results.sort((a, b) => b.score - a.score);
     else if (sortBy === "experienced") results.sort((a, b) => parseInt(b.experience) - parseInt(a.experience));
     else results.sort((a, b) => a.lastActive.localeCompare(b.lastActive));
 
     return results;
-  }, [search, skillFilter, expFilter, locationFilter, sortBy]);
+  }, [search, skillFilter, expFilter, locationFilter, sortBy, appliedAdv]);
 
   const toggleSkill = (skill: string) => {
     setSkillFilter(prev => prev.includes(skill) ? prev.filter(s => s !== skill) : [...prev, skill]);
   };
+
+  const advFiltersActive =
+    appliedAdv.categories.length > 0 ||
+    appliedAdv.jobTypes.length > 0 ||
+    appliedAdv.minScore > 0 ||
+    appliedAdv.verifiedOnly ||
+    appliedAdv.keywords.trim() !== "";
 
   const resetFilters = () => {
     setSearch("");
@@ -121,9 +171,52 @@ export default function Candidates() {
     setExpFilter("");
     setLocationFilter("");
     setSortBy("best");
+    setAppliedAdv({ categories: [], jobTypes: [], minScore: 0, verifiedOnly: false, keywords: "" });
+    setAdvCategories([]); setAdvJobTypes([]); setAdvMinScore(0); setAdvVerifiedOnly(false); setAdvKeywords("");
   };
 
-  const hasFilters = search || skillFilter.length > 0 || expFilter || locationFilter;
+  const applyAdvanced = () => {
+    setAppliedAdv({
+      categories: advCategories,
+      jobTypes: advJobTypes,
+      minScore: advMinScore,
+      verifiedOnly: advVerifiedOnly,
+      keywords: advKeywords,
+    });
+    setAdvancedOpen(false);
+    toast({ title: "Advanced filters applied" });
+  };
+
+  const clearAdvanced = () => {
+    setAdvCategories([]); setAdvJobTypes([]); setAdvMinScore(0); setAdvVerifiedOnly(false); setAdvKeywords("");
+    setAppliedAdv({ categories: [], jobTypes: [], minScore: 0, verifiedOnly: false, keywords: "" });
+  };
+
+  const exportCSV = () => {
+    if (filtered.length === 0) {
+      toast({ title: "Nothing to export", description: "Adjust filters and try again." });
+      return;
+    }
+    const headers = ["Name", "Role", "Category", "Job Type", "Experience", "Skills", "Location", "Education", "Email", "Phone", "Expected Salary", "Talent Score", "Status", "Last Active"];
+    const escape = (v: string | number) => `"${String(v).replace(/"/g, '""')}"`;
+    const rows = filtered.map(t => [
+      t.name, t.role, t.category, t.jobType, t.experience, t.skills.join("; "),
+      t.location, t.education, t.email, t.phone, t.expectedSalary, `${t.score}%`, t.status, t.lastActive,
+    ].map(escape).join(","));
+    const csv = [headers.map(escape).join(","), ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `talent-pool-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast({ title: "Export complete", description: `${filtered.length} talents exported to spreadsheet.` });
+  };
+
+  const hasFilters = !!(search || skillFilter.length > 0 || expFilter || locationFilter || advFiltersActive);
 
   const toggleShortlist = (id: number) => {
     setShortlisted(prev => {
@@ -149,11 +242,21 @@ export default function Candidates() {
           <p className="text-muted-foreground text-sm mt-1">AI-powered talent discovery</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="rounded-none gap-2">
+          <Button variant="outline" size="sm" className="rounded-none gap-2" onClick={exportCSV}>
             <Download className="h-4 w-4" /> Export
           </Button>
-          <Button variant="outline" size="sm" className="rounded-none gap-2">
+          <Button
+            variant={advFiltersActive ? "default" : "outline"}
+            size="sm"
+            className="rounded-none gap-2"
+            onClick={() => setAdvancedOpen(true)}
+          >
             <SlidersHorizontal className="h-4 w-4" /> Advanced Search
+            {advFiltersActive && (
+              <Badge variant="secondary" className="rounded-none ml-1 text-[10px] px-1.5 py-0">
+                {appliedAdv.categories.length + appliedAdv.jobTypes.length + (appliedAdv.minScore > 0 ? 1 : 0) + (appliedAdv.verifiedOnly ? 1 : 0) + (appliedAdv.keywords.trim() ? 1 : 0)}
+              </Badge>
+            )}
           </Button>
         </div>
       </div>
@@ -524,6 +627,116 @@ export default function Candidates() {
           )}
         </SheetContent>
       </Sheet>
+
+      {/* Advanced Search Dialog */}
+      <Dialog open={advancedOpen} onOpenChange={setAdvancedOpen}>
+        <DialogContent className="rounded-none max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="font-display flex items-center gap-2">
+              <SlidersHorizontal className="h-5 w-5 text-primary" /> Advanced Search
+            </DialogTitle>
+            <DialogDescription>
+              Refine your talent search across job categories, types, and qualifications. HireOn supports both technical and commercial roles.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-5 py-2">
+            {/* Keywords */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold uppercase tracking-wide">Keywords</Label>
+              <Input
+                placeholder="e.g. sales, IFRS, kubernetes (comma or space separated)"
+                value={advKeywords}
+                onChange={(e) => setAdvKeywords(e.target.value)}
+                className="rounded-none"
+              />
+              <p className="text-[11px] text-muted-foreground">Matches roles, skills, summaries, and education.</p>
+            </div>
+
+            {/* Job Categories */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold uppercase tracking-wide">Job Categories</Label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {categoryOptions.map(cat => {
+                  const checked = advCategories.includes(cat);
+                  return (
+                    <label key={cat} className={`flex items-center gap-2 px-3 py-2 border cursor-pointer transition-colors ${checked ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}>
+                      <Checkbox
+                        checked={checked}
+                        onCheckedChange={(v) => {
+                          setAdvCategories(prev => v ? [...prev, cat] : prev.filter(c => c !== cat));
+                        }}
+                      />
+                      <span className="text-sm">{cat}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Job Types */}
+            <div className="space-y-2">
+              <Label className="text-xs font-semibold uppercase tracking-wide">Job Type</Label>
+              <div className="flex flex-wrap gap-2">
+                {jobTypeOptions.map(jt => {
+                  const checked = advJobTypes.includes(jt);
+                  return (
+                    <button
+                      key={jt}
+                      type="button"
+                      onClick={() => setAdvJobTypes(prev => checked ? prev.filter(x => x !== jt) : [...prev, jt])}
+                      className={`px-3 py-1.5 text-sm border transition-colors ${checked ? "bg-primary text-primary-foreground border-primary" : "bg-background text-muted-foreground border-border hover:border-primary/50"}`}
+                    >
+                      {jt}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Min talent score */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="text-xs font-semibold uppercase tracking-wide">Minimum Talent Score</Label>
+                <span className="text-sm font-bold text-primary">{advMinScore}%</span>
+              </div>
+              <Slider
+                value={[advMinScore]}
+                onValueChange={(v) => setAdvMinScore(v[0])}
+                min={0}
+                max={100}
+                step={5}
+              />
+            </div>
+
+            {/* Verified only */}
+            <label className="flex items-center gap-3 px-3 py-2.5 border border-border cursor-pointer hover:border-primary/50 transition-colors">
+              <Checkbox
+                checked={advVerifiedOnly}
+                onCheckedChange={(v) => setAdvVerifiedOnly(!!v)}
+              />
+              <div className="flex-1">
+                <p className="text-sm font-medium flex items-center gap-1.5">
+                  <ShieldCheck className="h-4 w-4 text-primary" /> Verified talents only
+                </p>
+                <p className="text-[11px] text-muted-foreground">Show only NIN/ID-verified profiles.</p>
+              </div>
+            </label>
+          </div>
+
+          <DialogFooter className="gap-2">
+            <Button variant="ghost" className="rounded-none" onClick={clearAdvanced}>
+              Clear
+            </Button>
+            <Button variant="outline" className="rounded-none" onClick={() => setAdvancedOpen(false)}>
+              Cancel
+            </Button>
+            <Button className="rounded-none" onClick={applyAdvanced}>
+              Apply Filters
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
