@@ -54,7 +54,18 @@ const JobManagement = () => {
   const [modeFilter, setModeFilter] = useState("all");
   const [page, setPage] = useState(1);
   const [deleteTarget, setDeleteTarget] = useState<Job | null>(null);
+  const [viewJob, setViewJob] = useState<Job | null>(null);
   const [isLoading] = useState(false);
+
+  const handleEdit = (job: Job) => {
+    if (job.status !== "Draft") {
+      toast.error("Only drafts can be edited", {
+        description: "Kindly close or pause this listing and start a new one.",
+      });
+      return;
+    }
+    navigate(`/dashboard/jobs/${job.id}/edit`);
+  };
 
   const filtered = jobs.filter((j) => {
     if (search && !j.title.toLowerCase().includes(search.toLowerCase())) return false;
