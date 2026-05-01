@@ -229,7 +229,7 @@ const JobManagement = () => {
                       <div className="flex items-center justify-end gap-1">
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate(`/dashboard/jobs/${job.id}`)}>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setViewJob(job)}>
                               <Eye className="h-4 w-4" />
                             </Button>
                           </TooltipTrigger>
@@ -237,11 +237,11 @@ const JobManagement = () => {
                         </Tooltip>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigate(`/dashboard/jobs/${job.id}/edit`)}>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEdit(job)}>
                               <Pencil className="h-4 w-4" />
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent>Edit Job</TooltipContent>
+                          <TooltipContent>Edit Job (drafts only)</TooltipContent>
                         </Tooltip>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
