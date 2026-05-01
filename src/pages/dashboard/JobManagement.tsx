@@ -203,7 +203,7 @@ const JobManagement = () => {
                 {paginated.map((job) => (
                   <TableRow key={job.id}>
                     <TableCell>
-                      <button onClick={() => navigate(`/dashboard/jobs/${job.id}`)} className="font-semibold text-foreground hover:text-primary transition-colors text-left">
+                      <button onClick={() => setViewJob(job)} className="font-semibold text-foreground hover:text-primary transition-colors text-left">
                         {job.title}
                       </button>
                     </TableCell>
