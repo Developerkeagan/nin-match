@@ -74,6 +74,18 @@ const App = () => (
             <Route path="revenue" element={<AdminPlaceholder />} />
           </Route>
 
+          {/* Executive routes */}
+          <Route path="/executive" element={<ExecutiveLayout />}>
+            <Route index element={<ExecutiveOverview />} />
+            <Route path="workforce" element={<ExecutivePlaceholder title="Workforce" description="Manage employees, departments, roles, onboarding and offboarding from one place." />} />
+            <Route path="mailing" element={<ExecutivePlaceholder title="Mailing" description="Send memos, announcements and targeted communications to your workforce." />} />
+            <Route path="salary" element={<ExecutivePlaceholder title="Salary & Payroll" description="Run payroll, manage compensation bands and review salary breakdowns." />} />
+            <Route path="attendance" element={<ExecutivePlaceholder title="Attendance" description="Track time, leave requests and shift schedules across the company." />} />
+            <Route path="performance" element={<ExecutivePlaceholder title="Performance" description="Set goals, run reviews and track performance trends across teams." />} />
+            <Route path="tasks" element={<ExecutivePlaceholder title="Tasks & Projects" description="Assign work, track project progress and monitor team workloads." />} />
+            <Route path="settings" element={<ExecutivePlaceholder title="Workspace Settings" description="Configure your executive dashboard and company workspace preferences." />} />
+          </Route>
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
