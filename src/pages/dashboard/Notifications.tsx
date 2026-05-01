@@ -231,7 +231,7 @@ const Notifications = () => {
             <CheckCheck className="h-4 w-4 mr-1.5" />
             Mark all read
           </Button>
-          <Button variant="ghost" size="icon" className="text-muted-foreground">
+          <Button variant="ghost" size="icon" className="text-muted-foreground" onClick={() => setSettingsOpen(true)} aria-label="Notification settings">
             <Settings className="h-4 w-4" />
           </Button>
         </div>
