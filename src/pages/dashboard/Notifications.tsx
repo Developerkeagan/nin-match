@@ -260,6 +260,131 @@ const Notifications = () => {
           <DateGroup label="Earlier" notifications={earlier} onRead={markAsRead} />
         </div>
       )}
+
+      {/* Notification Settings Sheet */}
+      <Sheet open={settingsOpen} onOpenChange={setSettingsOpen}>
+        <SheetContent className="w-full sm:max-w-md overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2">
+              <Settings className="h-5 w-5 text-primary" /> Notification Settings
+            </SheetTitle>
+            <SheetDescription>
+              Choose what you want to be notified about and how you'd like to receive updates.
+            </SheetDescription>
+          </SheetHeader>
+
+          <div className="mt-6 space-y-6">
+            {/* Per-category channels */}
+            <div className="space-y-4">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Channels by Category</p>
+              {(["promotion", "credit", "talent", "system"] as const).map((key) => {
+                const cfg = typeConfig[key];
+                const Icon = cfg.icon;
+                const labels: Record<typeof key, string> = { promotion: "Promotions", credit: "Credits & Billing", talent: "Talent Matches", system: "System Alerts" };
+                return (
+                  <div key={key} className="border border-border p-3 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center ${cfg.bg}`}>
+                        <Icon className={`h-3.5 w-3.5 ${cfg.color}`} />
+                      </div>
+                      <p className="text-sm font-semibold">{labels[key]}</p>
+                    </div>
+                    <div className="space-y-2 pl-1">
+                      {([
+                        { id: "inApp", label: "In-app", icon: BellOff },
+                        { id: "email", label: "Email", icon: Mail },
+                        { id: "push", label: "Push", icon: Smartphone },
+                      ] as const).map(ch => (
+                        <div key={ch.id} className="flex items-center justify-between">
+                          <Label htmlFor={`${key}-${ch.id}`} className="text-sm font-normal flex items-center gap-2 text-muted-foreground cursor-pointer">
+                            <ch.icon className="h-3.5 w-3.5" /> {ch.label}
+                          </Label>
+                          <Switch
+                            id={`${key}-${ch.id}`}
+                            checked={prefs[key][ch.id]}
+                            onCheckedChange={(v) => setPrefs(p => ({ ...p, [key]: { ...p[key], [ch.id]: v } }))}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Delivery preferences */}
+            <div className="space-y-3">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Delivery</p>
+
+              <div className="border border-border p-3 space-y-1.5">
+                <Label className="text-sm font-medium">Email digest frequency</Label>
+                <Select
+                  value={prefs.digestFrequency}
+                  onValueChange={(v) => setPrefs(p => ({ ...p, digestFrequency: v as typeof prefs.digestFrequency }))}
+                >
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="instant">Instant</SelectItem>
+                    <SelectItem value="daily">Daily summary</SelectItem>
+                    <SelectItem value="weekly">Weekly summary</SelectItem>
+                    <SelectItem value="off">Off</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="border border-border p-3 flex items-center justify-between">
+                <Label htmlFor="sound" className="text-sm font-medium flex items-center gap-2">
+                  <Volume2 className="h-4 w-4 text-muted-foreground" /> Notification sounds
+                </Label>
+                <Switch
+                  id="sound"
+                  checked={prefs.sound}
+                  onCheckedChange={(v) => setPrefs(p => ({ ...p, sound: v }))}
+                />
+              </div>
+
+              <div className="border border-border p-3 flex items-center justify-between">
+                <div>
+                  <Label htmlFor="quiet" className="text-sm font-medium">Quiet hours (10pm – 7am)</Label>
+                  <p className="text-[11px] text-muted-foreground">Mute non-critical notifications.</p>
+                </div>
+                <Switch
+                  id="quiet"
+                  checked={prefs.quietHours}
+                  onCheckedChange={(v) => setPrefs(p => ({ ...p, quietHours: v }))}
+                />
+              </div>
+            </div>
+
+            {/* Quick actions */}
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Quick Actions</p>
+              <Button variant="outline" className="w-full justify-start" onClick={() => { markAllRead(); }}>
+                <CheckCheck className="h-4 w-4 mr-2" /> Mark all as read
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-start text-destructive hover:text-destructive"
+                onClick={() => { setNotifications([]); toast({ title: "Notifications cleared" }); }}
+              >
+                <BellOff className="h-4 w-4 mr-2" /> Clear all notifications
+              </Button>
+            </div>
+          </div>
+
+          <SheetFooter className="mt-6">
+            <Button
+              className="w-full"
+              onClick={() => {
+                setSettingsOpen(false);
+                toast({ title: "Preferences saved", description: "Your notification settings are up to date." });
+              }}
+            >
+              Save Preferences
+            </Button>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
