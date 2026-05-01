@@ -33,6 +33,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/hooks/use-toast";
+import { DashboardSwitcher } from "./DashboardSwitcher";
 
 const navItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard, desc: "Overview & quick stats" },
