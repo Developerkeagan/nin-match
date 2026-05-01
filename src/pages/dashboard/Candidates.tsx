@@ -126,16 +126,44 @@ export default function Candidates() {
       results = results.filter(t => t.location === locationFilter);
     }
 
+    // Advanced search filters
+    if (appliedAdv.categories.length > 0) {
+      results = results.filter(t => appliedAdv.categories.includes(t.category));
+    }
+    if (appliedAdv.jobTypes.length > 0) {
+      results = results.filter(t => appliedAdv.jobTypes.includes(t.jobType));
+    }
+    if (appliedAdv.minScore > 0) {
+      results = results.filter(t => t.score >= appliedAdv.minScore);
+    }
+    if (appliedAdv.verifiedOnly) {
+      results = results.filter(t => t.status === "verified");
+    }
+    if (appliedAdv.keywords.trim()) {
+      const kws = appliedAdv.keywords.toLowerCase().split(/[, ]+/).filter(Boolean);
+      results = results.filter(t => {
+        const hay = `${t.role} ${t.summary} ${t.skills.join(" ")} ${t.education}`.toLowerCase();
+        return kws.every(kw => hay.includes(kw));
+      });
+    }
+
     if (sortBy === "best") results.sort((a, b) => b.score - a.score);
     else if (sortBy === "experienced") results.sort((a, b) => parseInt(b.experience) - parseInt(a.experience));
     else results.sort((a, b) => a.lastActive.localeCompare(b.lastActive));
 
     return results;
-  }, [search, skillFilter, expFilter, locationFilter, sortBy]);
+  }, [search, skillFilter, expFilter, locationFilter, sortBy, appliedAdv]);
 
   const toggleSkill = (skill: string) => {
     setSkillFilter(prev => prev.includes(skill) ? prev.filter(s => s !== skill) : [...prev, skill]);
   };
+
+  const advFiltersActive =
+    appliedAdv.categories.length > 0 ||
+    appliedAdv.jobTypes.length > 0 ||
+    appliedAdv.minScore > 0 ||
+    appliedAdv.verifiedOnly ||
+    appliedAdv.keywords.trim() !== "";
 
   const resetFilters = () => {
     setSearch("");
@@ -143,6 +171,49 @@ export default function Candidates() {
     setExpFilter("");
     setLocationFilter("");
     setSortBy("best");
+    setAppliedAdv({ categories: [], jobTypes: [], minScore: 0, verifiedOnly: false, keywords: "" });
+    setAdvCategories([]); setAdvJobTypes([]); setAdvMinScore(0); setAdvVerifiedOnly(false); setAdvKeywords("");
+  };
+
+  const applyAdvanced = () => {
+    setAppliedAdv({
+      categories: advCategories,
+      jobTypes: advJobTypes,
+      minScore: advMinScore,
+      verifiedOnly: advVerifiedOnly,
+      keywords: advKeywords,
+    });
+    setAdvancedOpen(false);
+    toast({ title: "Advanced filters applied" });
+  };
+
+  const clearAdvanced = () => {
+    setAdvCategories([]); setAdvJobTypes([]); setAdvMinScore(0); setAdvVerifiedOnly(false); setAdvKeywords("");
+    setAppliedAdv({ categories: [], jobTypes: [], minScore: 0, verifiedOnly: false, keywords: "" });
+  };
+
+  const exportCSV = () => {
+    if (filtered.length === 0) {
+      toast({ title: "Nothing to export", description: "Adjust filters and try again." });
+      return;
+    }
+    const headers = ["Name", "Role", "Category", "Job Type", "Experience", "Skills", "Location", "Education", "Email", "Phone", "Expected Salary", "Talent Score", "Status", "Last Active"];
+    const escape = (v: string | number) => `"${String(v).replace(/"/g, '""')}"`;
+    const rows = filtered.map(t => [
+      t.name, t.role, t.category, t.jobType, t.experience, t.skills.join("; "),
+      t.location, t.education, t.email, t.phone, t.expectedSalary, `${t.score}%`, t.status, t.lastActive,
+    ].map(escape).join(","));
+    const csv = [headers.map(escape).join(","), ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `talent-pool-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast({ title: "Export complete", description: `${filtered.length} talents exported to spreadsheet.` });
   };
 
   const hasFilters = search || skillFilter.length > 0 || expFilter || locationFilter;
