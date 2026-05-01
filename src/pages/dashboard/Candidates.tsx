@@ -242,11 +242,21 @@ export default function Candidates() {
           <p className="text-muted-foreground text-sm mt-1">AI-powered talent discovery</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="rounded-none gap-2">
+          <Button variant="outline" size="sm" className="rounded-none gap-2" onClick={exportCSV}>
             <Download className="h-4 w-4" /> Export
           </Button>
-          <Button variant="outline" size="sm" className="rounded-none gap-2">
+          <Button
+            variant={advFiltersActive ? "default" : "outline"}
+            size="sm"
+            className="rounded-none gap-2"
+            onClick={() => setAdvancedOpen(true)}
+          >
             <SlidersHorizontal className="h-4 w-4" /> Advanced Search
+            {advFiltersActive && (
+              <Badge variant="secondary" className="rounded-none ml-1 text-[10px] px-1.5 py-0">
+                {appliedAdv.categories.length + appliedAdv.jobTypes.length + (appliedAdv.minScore > 0 ? 1 : 0) + (appliedAdv.verifiedOnly ? 1 : 0) + (appliedAdv.keywords.trim() ? 1 : 0)}
+              </Badge>
+            )}
           </Button>
         </div>
       </div>
