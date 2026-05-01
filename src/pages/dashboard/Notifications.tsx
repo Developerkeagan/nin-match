@@ -176,6 +176,16 @@ const Notifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>(MOCK_NOTIFICATIONS);
   const [activeTab, setActiveTab] = useState("all");
   const [loading] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [prefs, setPrefs] = useState({
+    promotion: { inApp: true, email: true, push: false },
+    credit: { inApp: true, email: true, push: true },
+    talent: { inApp: true, email: false, push: true },
+    system: { inApp: true, email: false, push: false },
+    sound: true,
+    digestFrequency: "instant" as "instant" | "daily" | "weekly" | "off",
+    quietHours: false,
+  });
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
