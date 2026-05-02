@@ -636,7 +636,7 @@ export default function Candidates() {
               <SlidersHorizontal className="h-5 w-5 text-primary" /> Advanced Search
             </DialogTitle>
             <DialogDescription>
-              Refine your talent search across job categories, types, and qualifications. HireOn supports both technical and commercial roles.
+              Refine your talent search across job categories, types, and qualifications. Hiravel supports both technical and commercial roles.
             </DialogDescription>
           </DialogHeader>
 

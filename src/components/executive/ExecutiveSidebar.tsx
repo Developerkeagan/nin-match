@@ -62,7 +62,7 @@ export function ExecutiveSidebar() {
           {collapsed ? (
             <span className="text-primary">H</span>
           ) : (
-            <>Hire<span className="text-primary">On</span></>
+            <>Hira<span className="text-primary">vel</span></>
           )}
         </a>
       </div>
