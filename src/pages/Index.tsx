@@ -1,11 +1,11 @@
 import Navbar from "@/components/Navbar";
 import SponsorMarquee from "@/components/SponsorMarquee";
-import HeroSection from "@/components/HeroSection";
-import ServicesSection from "@/components/ServicesSection";
-import PricingSection from "@/components/PricingSection";
-import ReviewsMarquee from "@/components/ReviewsMarquee";
-import AppPreview from "@/components/AppPreview";
-import FloatingCTA from "@/components/FloatingCTA";
+import HiravelHero from "@/components/landing/HiravelHero";
+import SolutionsSection from "@/components/landing/SolutionsSection";
+import RemoteRoleCTA from "@/components/landing/RemoteRoleCTA";
+import ExpertiseSection from "@/components/landing/ExpertiseSection";
+import EngagementPackages from "@/components/landing/EngagementPackages";
+import HireAtScaleCTA from "@/components/landing/HireAtScaleCTA";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -14,12 +14,12 @@ const Index = () => {
       <Navbar />
       <div className="pt-[70px]">
         <SponsorMarquee />
-        <HeroSection />
-        <ServicesSection />
-        <PricingSection />
-        <ReviewsMarquee />
-        <AppPreview />
-        <FloatingCTA />
+        <HiravelHero />
+        <SolutionsSection />
+        <RemoteRoleCTA />
+        <ExpertiseSection />
+        <EngagementPackages />
+        <HireAtScaleCTA />
         <Footer />
       </div>
     </div>

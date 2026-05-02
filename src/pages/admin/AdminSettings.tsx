@@ -72,7 +72,7 @@ const AdminSettings = () => {
     username: "admin_hireon",
     phone: "+234 801 234 5678",
     role: "Super Admin",
-    bio: "Platform administrator for HireOn.",
+    bio: "Platform administrator for Hiravel.",
   });
 
   const [platformSettings, setPlatformSettings] = useState({

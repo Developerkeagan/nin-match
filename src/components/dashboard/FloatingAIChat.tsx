@@ -24,7 +24,7 @@ export function FloatingAIChat() {
     {
       id: "welcome",
       role: "assistant",
-      content: "Hi! I'm your HireOn AI assistant. How can I help you today?",
+      content: "Hi! I'm your Hiravel AI assistant. How can I help you today?",
       timestamp: new Date(),
     },
   ]);
@@ -82,7 +82,7 @@ export function FloatingAIChat() {
             <div className="flex items-center gap-2">
               <Bot className="h-5 w-5" />
               <div>
-                <p className="text-sm font-semibold">HireOn AI</p>
+                <p className="text-sm font-semibold">Hiravel AI</p>
                 <p className="text-xs opacity-80">Always here to help</p>
               </div>
             </div>

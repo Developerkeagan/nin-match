@@ -17,7 +17,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
             onClick={() => navigate("/")}
             className="font-display text-2xl font-bold text-foreground tracking-tight inline-block"
           >
-            Hire<span className="text-primary">On</span>
+            Hira<span className="text-primary">vel</span>
           </button>
           <p className="mt-1 text-xs uppercase tracking-widest text-muted-foreground font-medium">
             Welcome back
@@ -29,7 +29,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
 
         {/* Footer */}
         <p className="mt-10 text-center text-xs text-muted-foreground/60">
-          © 2026 HireOn. All rights reserved.
+          © 2026 Hiravel. All rights reserved.
         </p>
       </div>
     </div>
