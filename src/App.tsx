@@ -29,6 +29,8 @@ import AdminPartners from "./pages/admin/AdminPartners.tsx";
 import AdminUsers from "./pages/admin/AdminUsers.tsx";
 import AdminCompanies from "./pages/admin/AdminCompanies.tsx";
 import AdminSettings from "./pages/admin/AdminSettings.tsx";
+import AdminPromotionPlans from "./pages/admin/AdminPromotionPlans.tsx";
+import AdminRevenue from "./pages/admin/AdminRevenue.tsx";
 import ExecutiveLayout from "./components/executive/ExecutiveLayout.tsx";
 import ExecutiveOverview from "./pages/executive/ExecutiveOverview.tsx";
 import ExecutivePlaceholder from "./pages/executive/ExecutivePlaceholder.tsx";
@@ -70,8 +72,8 @@ const App = () => (
             <Route path="partners" element={<AdminPartners />} />
             <Route path="notify" element={<AdminNotify />} />
             <Route path="settings" element={<AdminSettings />} />
-            <Route path="promotions" element={<AdminPlaceholder />} />
-            <Route path="revenue" element={<AdminPlaceholder />} />
+            <Route path="promotions" element={<AdminPromotionPlans />} />
+            <Route path="revenue" element={<AdminRevenue />} />
           </Route>
 
           {/* Executive routes */}
