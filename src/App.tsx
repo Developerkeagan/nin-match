@@ -36,6 +36,9 @@ import ExecutiveOverview from "./pages/executive/ExecutiveOverview.tsx";
 import ExecutivePlaceholder from "./pages/executive/ExecutivePlaceholder.tsx";
 import ExecutiveWorkforce from "./pages/executive/ExecutiveWorkforce.tsx";
 import ExecutiveMailing from "./pages/executive/ExecutiveMailing.tsx";
+import ExecutiveSalary from "./pages/executive/ExecutiveSalary.tsx";
+import ExecutiveAttendance from "./pages/executive/ExecutiveAttendance.tsx";
+import ExecutivePerformance from "./pages/executive/ExecutivePerformance.tsx";
 
 const queryClient = new QueryClient();
 
@@ -83,9 +86,9 @@ const App = () => (
             <Route index element={<ExecutiveOverview />} />
             <Route path="workforce" element={<ExecutiveWorkforce />} />
             <Route path="mailing" element={<ExecutiveMailing />} />
-            <Route path="salary" element={<ExecutivePlaceholder title="Salary & Payroll" description="Run payroll, manage compensation bands and review salary breakdowns." />} />
-            <Route path="attendance" element={<ExecutivePlaceholder title="Attendance" description="Track time, leave requests and shift schedules across the company." />} />
-            <Route path="performance" element={<ExecutivePlaceholder title="Performance" description="Set goals, run reviews and track performance trends across teams." />} />
+            <Route path="salary" element={<ExecutiveSalary />} />
+            <Route path="attendance" element={<ExecutiveAttendance />} />
+            <Route path="performance" element={<ExecutivePerformance />} />
             <Route path="tasks" element={<ExecutivePlaceholder title="Tasks & Projects" description="Assign work, track project progress and monitor team workloads." />} />
             <Route path="settings" element={<ExecutivePlaceholder title="Workspace Settings" description="Configure your executive dashboard and company workspace preferences." />} />
           </Route>
