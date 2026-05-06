@@ -36,6 +36,9 @@ import ExecutiveOverview from "./pages/executive/ExecutiveOverview.tsx";
 import ExecutivePlaceholder from "./pages/executive/ExecutivePlaceholder.tsx";
 import ExecutiveWorkforce from "./pages/executive/ExecutiveWorkforce.tsx";
 import ExecutiveMailing from "./pages/executive/ExecutiveMailing.tsx";
+import ExecutiveSalary from "./pages/executive/ExecutiveSalary.tsx";
+import ExecutiveAttendance from "./pages/executive/ExecutiveAttendance.tsx";
+import ExecutivePerformance from "./pages/executive/ExecutivePerformance.tsx";
 
 const queryClient = new QueryClient();
 
