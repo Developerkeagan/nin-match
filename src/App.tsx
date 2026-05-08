@@ -39,6 +39,8 @@ import ExecutiveMailing from "./pages/executive/ExecutiveMailing.tsx";
 import ExecutiveSalary from "./pages/executive/ExecutiveSalary.tsx";
 import ExecutiveAttendance from "./pages/executive/ExecutiveAttendance.tsx";
 import ExecutivePerformance from "./pages/executive/ExecutivePerformance.tsx";
+import ExecutiveTasks from "./pages/executive/ExecutiveTasks.tsx";
+import ExecutiveSettings from "./pages/executive/ExecutiveSettings.tsx";
 
 const queryClient = new QueryClient();
 
@@ -89,8 +91,8 @@ const App = () => (
             <Route path="salary" element={<ExecutiveSalary />} />
             <Route path="attendance" element={<ExecutiveAttendance />} />
             <Route path="performance" element={<ExecutivePerformance />} />
-            <Route path="tasks" element={<ExecutivePlaceholder title="Tasks & Projects" description="Assign work, track project progress and monitor team workloads." />} />
-            <Route path="settings" element={<ExecutivePlaceholder title="Workspace Settings" description="Configure your executive dashboard and company workspace preferences." />} />
+            <Route path="tasks" element={<ExecutiveTasks />} />
+            <Route path="settings" element={<ExecutiveSettings />} />
           </Route>
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
