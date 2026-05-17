@@ -566,6 +566,7 @@ const ExecutiveTasks = () => {
                   ))}
                 </ul>
               )}
+              </div>
           </div>
           <DialogFooter>
             <Button variant="outline" className="rounded-none" onClick={() => setNewOpen(false)}>Cancel</Button>
