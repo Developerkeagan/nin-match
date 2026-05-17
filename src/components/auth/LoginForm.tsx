@@ -32,6 +32,12 @@ const LoginForm = ({ onForgotPassword, onSignup }: LoginFormProps) => {
       } else if (username === "user@gmail.com" && password === "user123") {
         toast({ title: "Logged in!", description: "Redirecting..." });
         navigate("/dashboard");
+      } else if (username === "customercare@gmail.com" && password === "customercare123") {
+        toast({ title: "Welcome, Customer Care!", description: "Opening your support inbox..." });
+        navigate("/support");
+      } else if (username === "employee@gmail.com" && password === "employee123") {
+        toast({ title: "Welcome back!", description: "Opening your workspace..." });
+        navigate("/employee");
       } else {
         toast({ title: "Invalid credentials", description: "Please check your email and password.", variant: "destructive" });
       }

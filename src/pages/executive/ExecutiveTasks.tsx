@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,12 +20,16 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Plus, Search, Filter, ClipboardList, CheckCircle2, Clock, AlertTriangle,
   Calendar, Users, Flag, MessageSquare, Trash2, Edit, Play, Pause, ArrowRight,
+  Paperclip, Repeat, X as XIcon,
 } from "lucide-react";
 import { toast } from "sonner";
 import { execEmployees } from "./data/employees";
 
 type Status = "todo" | "in-progress" | "review" | "done";
 type Priority = "low" | "medium" | "high" | "urgent";
+type Recurrence = "none" | "daily" | "weekly" | "monthly";
+
+interface Attachment { name: string; size: number }
 
 interface Task {
   id: string;
@@ -39,6 +43,8 @@ interface Task {
   progress: number;
   comments: { who: string; text: string; at: string }[];
   createdAt: string;
+  recurring: Recurrence;
+  attachments: Attachment[];
 }
 
 interface Project {
@@ -57,12 +63,12 @@ const initialProjects: Project[] = [
 ];
 
 const seedTasks: Task[] = [
-  { id: "T-001", title: "Migrate auth to new identity service", description: "Move all sign-in flows to the unified identity provider.", assignee: "Chinedu Okoro", project: "Q1 Platform Revamp", status: "in-progress", priority: "high", dueDate: "2026-05-20", progress: 60, comments: [{ who: "Chinedu Okoro", text: "Staging deploy ready by Friday", at: "2 days ago" }], createdAt: "2026-04-12" },
-  { id: "T-002", title: "Build new analytics dashboard", description: "Replace legacy charts with new design system.", assignee: "Aisha Bello", project: "Q1 Platform Revamp", status: "todo", priority: "medium", dueDate: "2026-06-01", progress: 0, comments: [], createdAt: "2026-04-15" },
-  { id: "T-003", title: "Enterprise outreach playbook", description: "Document outbound flow for top 50 enterprise targets.", assignee: "Tolu Adeyinka", project: "Sales Pipeline Refresh", status: "review", priority: "high", dueDate: "2026-05-12", progress: 85, comments: [{ who: "Tolu Adeyinka", text: "Awaiting CRO sign-off", at: "yesterday" }], createdAt: "2026-04-01" },
-  { id: "T-004", title: "Launch landing page A/B test", description: "Test new hero variant against control.", assignee: "Halima Sani", project: "Brand Campaign 2026", status: "in-progress", priority: "urgent", dueDate: "2026-05-09", progress: 40, comments: [], createdAt: "2026-04-20" },
-  { id: "T-005", title: "Onboard 3 new engineers", description: "Setup laptops, accounts, mentor pairings.", assignee: "Funmi Adesanya", project: "Internal Tools", status: "done", priority: "medium", dueDate: "2026-05-01", progress: 100, comments: [], createdAt: "2026-04-08" },
-  { id: "T-006", title: "Quarterly OKR review", description: "Run review session with all team leads.", assignee: "Sade Olawale", project: "Internal Tools", status: "todo", priority: "low", dueDate: "2026-06-15", progress: 0, comments: [], createdAt: "2026-04-22" },
+  { id: "T-001", title: "Migrate auth to new identity service", description: "Move all sign-in flows to the unified identity provider.", assignee: "Chinedu Okoro", project: "Q1 Platform Revamp", status: "in-progress", priority: "high", dueDate: "2026-05-20", progress: 60, comments: [{ who: "Chinedu Okoro", text: "Staging deploy ready by Friday", at: "2 days ago" }], createdAt: "2026-04-12", recurring: "none", attachments: [{ name: "auth-spec.pdf", size: 482301 }] },
+  { id: "T-002", title: "Build new analytics dashboard", description: "Replace legacy charts with new design system.", assignee: "Aisha Bello", project: "Q1 Platform Revamp", status: "todo", priority: "medium", dueDate: "2026-06-01", progress: 0, comments: [], createdAt: "2026-04-15", recurring: "none", attachments: [] },
+  { id: "T-003", title: "Enterprise outreach playbook", description: "Document outbound flow for top 50 enterprise targets.", assignee: "Tolu Adeyinka", project: "Sales Pipeline Refresh", status: "review", priority: "high", dueDate: "2026-05-12", progress: 85, comments: [{ who: "Tolu Adeyinka", text: "Awaiting CRO sign-off", at: "yesterday" }], createdAt: "2026-04-01", recurring: "none", attachments: [] },
+  { id: "T-004", title: "Launch landing page A/B test", description: "Test new hero variant against control.", assignee: "Halima Sani", project: "Brand Campaign 2026", status: "in-progress", priority: "urgent", dueDate: "2026-05-09", progress: 40, comments: [], createdAt: "2026-04-20", recurring: "none", attachments: [] },
+  { id: "T-005", title: "Onboard 3 new engineers", description: "Setup laptops, accounts, mentor pairings.", assignee: "Funmi Adesanya", project: "Internal Tools", status: "done", priority: "medium", dueDate: "2026-05-01", progress: 100, comments: [], createdAt: "2026-04-08", recurring: "none", attachments: [] },
+  { id: "T-006", title: "Weekly engineering standup notes", description: "Capture decisions, blockers and owners.", assignee: "Sade Olawale", project: "Internal Tools", status: "todo", priority: "low", dueDate: "2026-05-19", progress: 0, comments: [], createdAt: "2026-04-22", recurring: "weekly", attachments: [] },
 ];
 
 const statusMeta: Record<Status, { label: string; color: string; icon: typeof Clock }> = {
@@ -94,7 +100,9 @@ const ExecutiveTasks = () => {
   const [draft, setDraft] = useState({
     title: "", description: "", assignee: execEmployees[0].name,
     project: projects[0].name, priority: "medium" as Priority, dueDate: "",
+    recurring: "none" as Recurrence, attachments: [] as Attachment[],
   });
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [projDraft, setProjDraft] = useState({ name: "", lead: execEmployees[0].name, due: "" });
 
   const filtered = useMemo(() => tasks.filter((t) => {
@@ -152,9 +160,17 @@ const ExecutiveTasks = () => {
     };
     setTasks((p) => [t, ...p]);
     setNewOpen(false);
-    setDraft({ title: "", description: "", assignee: execEmployees[0].name, project: projects[0].name, priority: "medium", dueDate: "" });
-    toast.success("Task created");
+    setDraft({ title: "", description: "", assignee: execEmployees[0].name, project: projects[0].name, priority: "medium", dueDate: "", recurring: "none", attachments: [] });
+    toast.success(draft.recurring !== "none" ? `Recurring task created (${draft.recurring})` : "Task created");
   };
+
+  const handleFiles = (files: FileList | null) => {
+    if (!files) return;
+    const items: Attachment[] = Array.from(files).map((f) => ({ name: f.name, size: f.size }));
+    setDraft((d) => ({ ...d, attachments: [...d.attachments, ...items] }));
+    toast.success(`${items.length} attachment${items.length > 1 ? "s" : ""} added`);
+  };
+  const removeAttachment = (i: number) => setDraft((d) => ({ ...d, attachments: d.attachments.filter((_, idx) => idx !== i) }));
 
   const createProject = () => {
     if (!projDraft.name.trim() || !projDraft.due) { toast.error("Name and due date required"); return; }
@@ -390,6 +406,30 @@ const ExecutiveTasks = () => {
                   </div>
                 </div>
 
+                {(open.recurring !== "none" || open.attachments.length > 0) && (
+                  <div className="space-y-2">
+                    {open.recurring !== "none" && (
+                      <div className="flex items-center gap-2 text-xs bg-primary/5 border border-primary/20 px-2.5 py-1.5">
+                        <Repeat className="h-3.5 w-3.5 text-primary" />
+                        <span className="text-foreground">Recurs <span className="font-semibold capitalize">{open.recurring}</span></span>
+                      </div>
+                    )}
+                    {open.attachments.length > 0 && (
+                      <div>
+                        <Label className="text-xs uppercase text-muted-foreground flex items-center gap-1.5"><Paperclip className="h-3 w-3" /> Attachments ({open.attachments.length})</Label>
+                        <ul className="mt-2 space-y-1">
+                          {open.attachments.map((a, i) => (
+                            <li key={i} className="text-xs bg-muted/40 px-2 py-1 border flex items-center justify-between">
+                              <span className="truncate">{a.name}</span>
+                              <span className="text-muted-foreground shrink-0 ml-2">{(a.size / 1024).toFixed(1)} KB</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div>
                   <div className="flex items-center justify-between">
                     <Label className="text-xs uppercase text-muted-foreground">Progress</Label>
@@ -497,7 +537,35 @@ const ExecutiveTasks = () => {
                 <Label className="text-xs">Due date</Label>
                 <Input type="date" className="rounded-none" value={draft.dueDate} onChange={(e) => setDraft({ ...draft, dueDate: e.target.value })} />
               </div>
+              <div>
+                <Label className="text-xs">Recurring</Label>
+                <Select value={draft.recurring} onValueChange={(v) => setDraft({ ...draft, recurring: v as Recurrence })}>
+                  <SelectTrigger className="rounded-none"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">One-off</SelectItem>
+                    <SelectItem value="daily">Daily</SelectItem>
+                    <SelectItem value="weekly">Weekly</SelectItem>
+                    <SelectItem value="monthly">Monthly</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
+            <div>
+              <Label className="text-xs flex items-center gap-1.5"><Paperclip className="h-3 w-3" /> Attachments</Label>
+              <input ref={fileInputRef} type="file" multiple className="hidden" onChange={(e) => handleFiles(e.target.files)} />
+              <Button type="button" variant="outline" size="sm" className="rounded-none mt-1" onClick={() => fileInputRef.current?.click()}>
+                <Paperclip className="h-3.5 w-3.5 mr-2" /> Add files
+              </Button>
+              {draft.attachments.length > 0 && (
+                <ul className="mt-2 space-y-1">
+                  {draft.attachments.map((a, i) => (
+                    <li key={i} className="flex items-center justify-between text-xs bg-muted/40 px-2 py-1 border">
+                      <span className="truncate">{a.name} <span className="text-muted-foreground">· {(a.size / 1024).toFixed(1)} KB</span></span>
+                      <button onClick={() => removeAttachment(i)} className="text-muted-foreground hover:text-destructive"><XIcon className="h-3 w-3" /></button>
+                    </li>
+                  ))}
+                </ul>
+              )}
           </div>
           <DialogFooter>
             <Button variant="outline" className="rounded-none" onClick={() => setNewOpen(false)}>Cancel</Button>
