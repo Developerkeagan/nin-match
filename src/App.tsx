@@ -10,7 +10,6 @@ import ResetPassword from "./pages/ResetPassword.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import DashboardLayout from "./components/dashboard/DashboardLayout.tsx";
 import DashboardOverview from "./pages/dashboard/DashboardOverview.tsx";
-import PlaceholderPage from "./pages/dashboard/PlaceholderPage.tsx";
 import Settings from "./pages/dashboard/Settings.tsx";
 import JobManagement from "./pages/dashboard/JobManagement.tsx";
 import CreateJob from "./pages/dashboard/CreateJob.tsx";
@@ -23,7 +22,6 @@ import Notifications from "./pages/dashboard/Notifications.tsx";
 import CompanyProfile from "./pages/dashboard/CompanyProfile.tsx";
 import AdminLayout from "./components/admin/AdminLayout.tsx";
 import AdminOverview from "./pages/admin/AdminOverview.tsx";
-import AdminPlaceholder from "./pages/admin/AdminPlaceholder.tsx";
 import AdminNotify from "./pages/admin/AdminNotify.tsx";
 import AdminPartners from "./pages/admin/AdminPartners.tsx";
 import AdminUsers from "./pages/admin/AdminUsers.tsx";
@@ -33,7 +31,6 @@ import AdminPromotionPlans from "./pages/admin/AdminPromotionPlans.tsx";
 import AdminRevenue from "./pages/admin/AdminRevenue.tsx";
 import ExecutiveLayout from "./components/executive/ExecutiveLayout.tsx";
 import ExecutiveOverview from "./pages/executive/ExecutiveOverview.tsx";
-import ExecutivePlaceholder from "./pages/executive/ExecutivePlaceholder.tsx";
 import ExecutiveWorkforce from "./pages/executive/ExecutiveWorkforce.tsx";
 import ExecutiveMailing from "./pages/executive/ExecutiveMailing.tsx";
 import ExecutiveSalary from "./pages/executive/ExecutiveSalary.tsx";
@@ -41,6 +38,16 @@ import ExecutiveAttendance from "./pages/executive/ExecutiveAttendance.tsx";
 import ExecutivePerformance from "./pages/executive/ExecutivePerformance.tsx";
 import ExecutiveTasks from "./pages/executive/ExecutiveTasks.tsx";
 import ExecutiveSettings from "./pages/executive/ExecutiveSettings.tsx";
+import SupportLayout from "./components/support/SupportLayout.tsx";
+import SupportChats from "./pages/support/SupportChats.tsx";
+import SupportProfile from "./pages/support/SupportProfile.tsx";
+import EmployeeLayout from "./components/employee/EmployeeLayout.tsx";
+import EmployeeOverview from "./pages/employee/EmployeeOverview.tsx";
+import EmployeeTasks from "./pages/employee/EmployeeTasks.tsx";
+import EmployeeAttendance from "./pages/employee/EmployeeAttendance.tsx";
+import EmployeeSalary from "./pages/employee/EmployeeSalary.tsx";
+import EmployeeNotifications from "./pages/employee/EmployeeNotifications.tsx";
+import EmployeeProfile from "./pages/employee/EmployeeProfile.tsx";
 
 const queryClient = new QueryClient();
 
@@ -55,8 +62,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/verify-otp" element={<VerifyOTP />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          
-          {/* Dashboard routes */}
+
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardOverview />} />
             <Route path="jobs" element={<JobManagement />} />
@@ -71,7 +77,6 @@ const App = () => (
             <Route path="settings" element={<Settings />} />
           </Route>
 
-          {/* Admin routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminOverview />} />
             <Route path="users" element={<AdminUsers />} />
@@ -83,7 +88,6 @@ const App = () => (
             <Route path="revenue" element={<AdminRevenue />} />
           </Route>
 
-          {/* Executive routes */}
           <Route path="/executive" element={<ExecutiveLayout />}>
             <Route index element={<ExecutiveOverview />} />
             <Route path="workforce" element={<ExecutiveWorkforce />} />
@@ -95,7 +99,21 @@ const App = () => (
             <Route path="settings" element={<ExecutiveSettings />} />
           </Route>
 
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/support" element={<SupportLayout />}>
+            <Route index element={<SupportChats />} />
+            <Route path="closed" element={<SupportChats />} />
+            <Route path="profile" element={<SupportProfile />} />
+          </Route>
+
+          <Route path="/employee" element={<EmployeeLayout />}>
+            <Route index element={<EmployeeOverview />} />
+            <Route path="tasks" element={<EmployeeTasks />} />
+            <Route path="attendance" element={<EmployeeAttendance />} />
+            <Route path="salary" element={<EmployeeSalary />} />
+            <Route path="notifications" element={<EmployeeNotifications />} />
+            <Route path="profile" element={<EmployeeProfile />} />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
