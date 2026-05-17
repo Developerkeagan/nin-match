@@ -406,6 +406,30 @@ const ExecutiveTasks = () => {
                   </div>
                 </div>
 
+                {(open.recurring !== "none" || open.attachments.length > 0) && (
+                  <div className="space-y-2">
+                    {open.recurring !== "none" && (
+                      <div className="flex items-center gap-2 text-xs bg-primary/5 border border-primary/20 px-2.5 py-1.5">
+                        <Repeat className="h-3.5 w-3.5 text-primary" />
+                        <span className="text-foreground">Recurs <span className="font-semibold capitalize">{open.recurring}</span></span>
+                      </div>
+                    )}
+                    {open.attachments.length > 0 && (
+                      <div>
+                        <Label className="text-xs uppercase text-muted-foreground flex items-center gap-1.5"><Paperclip className="h-3 w-3" /> Attachments ({open.attachments.length})</Label>
+                        <ul className="mt-2 space-y-1">
+                          {open.attachments.map((a, i) => (
+                            <li key={i} className="text-xs bg-muted/40 px-2 py-1 border flex items-center justify-between">
+                              <span className="truncate">{a.name}</span>
+                              <span className="text-muted-foreground shrink-0 ml-2">{(a.size / 1024).toFixed(1)} KB</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div>
                   <div className="flex items-center justify-between">
                     <Label className="text-xs uppercase text-muted-foreground">Progress</Label>
@@ -513,7 +537,35 @@ const ExecutiveTasks = () => {
                 <Label className="text-xs">Due date</Label>
                 <Input type="date" className="rounded-none" value={draft.dueDate} onChange={(e) => setDraft({ ...draft, dueDate: e.target.value })} />
               </div>
+              <div>
+                <Label className="text-xs">Recurring</Label>
+                <Select value={draft.recurring} onValueChange={(v) => setDraft({ ...draft, recurring: v as Recurrence })}>
+                  <SelectTrigger className="rounded-none"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">One-off</SelectItem>
+                    <SelectItem value="daily">Daily</SelectItem>
+                    <SelectItem value="weekly">Weekly</SelectItem>
+                    <SelectItem value="monthly">Monthly</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
+            <div>
+              <Label className="text-xs flex items-center gap-1.5"><Paperclip className="h-3 w-3" /> Attachments</Label>
+              <input ref={fileInputRef} type="file" multiple className="hidden" onChange={(e) => handleFiles(e.target.files)} />
+              <Button type="button" variant="outline" size="sm" className="rounded-none mt-1" onClick={() => fileInputRef.current?.click()}>
+                <Paperclip className="h-3.5 w-3.5 mr-2" /> Add files
+              </Button>
+              {draft.attachments.length > 0 && (
+                <ul className="mt-2 space-y-1">
+                  {draft.attachments.map((a, i) => (
+                    <li key={i} className="flex items-center justify-between text-xs bg-muted/40 px-2 py-1 border">
+                      <span className="truncate">{a.name} <span className="text-muted-foreground">· {(a.size / 1024).toFixed(1)} KB</span></span>
+                      <button onClick={() => removeAttachment(i)} className="text-muted-foreground hover:text-destructive"><XIcon className="h-3 w-3" /></button>
+                    </li>
+                  ))}
+                </ul>
+              )}
           </div>
           <DialogFooter>
             <Button variant="outline" className="rounded-none" onClick={() => setNewOpen(false)}>Cancel</Button>

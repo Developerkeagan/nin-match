@@ -126,7 +126,7 @@ const ExecutiveWorkforce = () => {
   const [terminateReason, setTerminateReason] = useState("");
 
   // add employee
-  const [newEmp, setNewEmp] = useState({ name: "", email: "", role: "", department: "Engineering", salary: "", level: "Mid" as Employee["level"], location: "" });
+  const [newEmp, setNewEmp] = useState({ name: "", email: "", nin: "", password: "", role: "", department: "Engineering", salary: "", level: "Mid" as Employee["level"], location: "" });
 
   const filtered = useMemo(() => {
     return employees.filter((e) => {
@@ -220,10 +220,12 @@ const ExecutiveWorkforce = () => {
   };
 
   const submitAdd = () => {
-    if (!newEmp.name || !newEmp.email || !newEmp.role || !newEmp.salary) {
-      toast.error("Fill required fields");
+    if (!newEmp.name || !newEmp.email || !newEmp.role || !newEmp.salary || !newEmp.nin || !newEmp.password) {
+      toast.error("Name, email, NIN, password, role and salary are required");
       return;
     }
+    if (newEmp.nin.length !== 11) { toast.error("NIN must be 11 digits"); return; }
+    if (newEmp.password.length < 6) { toast.error("Password must be at least 6 characters"); return; }
     const id = `EMP-${String(employees.length + 1).padStart(3, "0")}`;
     setEmployees((list) => [
       {
@@ -239,12 +241,15 @@ const ExecutiveWorkforce = () => {
         location: newEmp.location || "—",
         performance: 70,
         level: newEmp.level,
-        history: [{ date: new Date().toISOString().slice(0, 10), event: "Joined company" }],
+        history: [
+          { date: new Date().toISOString().slice(0, 10), event: `Onboarded with NIN ${newEmp.nin.slice(0, 3)}••••${newEmp.nin.slice(-2)}` },
+          { date: new Date().toISOString().slice(0, 10), event: "Employee portal credentials issued" },
+        ],
       },
       ...list,
     ]);
-    toast.success(`${newEmp.name} added to workforce`);
-    setNewEmp({ name: "", email: "", role: "", department: "Engineering", salary: "", level: "Mid", location: "" });
+    toast.success(`${newEmp.name} added — they can log in at /employee with ${newEmp.email}`);
+    setNewEmp({ name: "", email: "", nin: "", password: "", role: "", department: "Engineering", salary: "", level: "Mid", location: "" });
     setAction(null);
   };
 
@@ -570,42 +575,53 @@ const ExecutiveWorkforce = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Add Employee dialog */}
-      <Dialog open={action === "add"} onOpenChange={(o) => !o && setAction(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Add Employee</DialogTitle>
-            <DialogDescription>Onboard a new team member to your workforce.</DialogDescription>
-          </DialogHeader>
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <div><Label className="text-xs">Name</Label><Input value={newEmp.name} onChange={(e) => setNewEmp({ ...newEmp, name: e.target.value })} /></div>
-              <div><Label className="text-xs">Email</Label><Input type="email" value={newEmp.email} onChange={(e) => setNewEmp({ ...newEmp, email: e.target.value })} /></div>
-              <div className="col-span-2"><Label className="text-xs">Role title</Label><Input value={newEmp.role} onChange={(e) => setNewEmp({ ...newEmp, role: e.target.value })} /></div>
-              <div>
-                <Label className="text-xs">Department</Label>
-                <Select value={newEmp.department} onValueChange={(v) => setNewEmp({ ...newEmp, department: v })}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>{departments.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}</SelectContent>
-                </Select>
+      {/* Add Employee — right side sheet */}
+      <Sheet open={action === "add"} onOpenChange={(o) => !o && setAction(null)}>
+        <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle>Add Employee</SheetTitle>
+            <SheetDescription>Onboard a new team member. They'll be issued employee portal credentials and linked to your company via NIN.</SheetDescription>
+          </SheetHeader>
+          <div className="space-y-4 mt-6">
+            <div className="space-y-3">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">Identity</p>
+              <div><Label className="text-xs">Full name *</Label><Input value={newEmp.name} onChange={(e) => setNewEmp({ ...newEmp, name: e.target.value })} placeholder="Jane Doe" /></div>
+              <div><Label className="text-xs">National Identity Number (NIN) *</Label><Input maxLength={11} value={newEmp.nin} onChange={(e) => setNewEmp({ ...newEmp, nin: e.target.value.replace(/\D/g, "") })} placeholder="11-digit NIN" /></div>
+            </div>
+            <div className="space-y-3 border-t pt-4">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">Portal credentials</p>
+              <div><Label className="text-xs">Email *</Label><Input type="email" value={newEmp.email} onChange={(e) => setNewEmp({ ...newEmp, email: e.target.value })} placeholder="jane@acmecorp.io" /></div>
+              <div><Label className="text-xs">Temporary password *</Label><Input type="text" value={newEmp.password} onChange={(e) => setNewEmp({ ...newEmp, password: e.target.value })} placeholder="At least 6 characters" /></div>
+            </div>
+            <div className="space-y-3 border-t pt-4">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">Role</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="col-span-2"><Label className="text-xs">Role title *</Label><Input value={newEmp.role} onChange={(e) => setNewEmp({ ...newEmp, role: e.target.value })} placeholder="Senior Engineer" /></div>
+                <div>
+                  <Label className="text-xs">Department *</Label>
+                  <Select value={newEmp.department} onValueChange={(v) => setNewEmp({ ...newEmp, department: v })}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>{departments.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-xs">Level</Label>
+                  <Select value={newEmp.level} onValueChange={(v) => setNewEmp({ ...newEmp, level: v as Employee["level"] })}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>{levels.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
+                <div><Label className="text-xs">Salary (₦) *</Label><Input type="number" value={newEmp.salary} onChange={(e) => setNewEmp({ ...newEmp, salary: e.target.value })} placeholder="450000" /></div>
+                <div><Label className="text-xs">Location</Label><Input value={newEmp.location} onChange={(e) => setNewEmp({ ...newEmp, location: e.target.value })} placeholder="Lagos, NG" /></div>
               </div>
-              <div>
-                <Label className="text-xs">Level</Label>
-                <Select value={newEmp.level} onValueChange={(v) => setNewEmp({ ...newEmp, level: v as Employee["level"] })}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>{levels.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
-                </Select>
-              </div>
-              <div><Label className="text-xs">Salary (₦)</Label><Input type="number" value={newEmp.salary} onChange={(e) => setNewEmp({ ...newEmp, salary: e.target.value })} /></div>
-              <div><Label className="text-xs">Location</Label><Input value={newEmp.location} onChange={(e) => setNewEmp({ ...newEmp, location: e.target.value })} /></div>
+            </div>
+            <div className="flex gap-2 pt-4 border-t">
+              <Button variant="outline" className="flex-1" onClick={() => setAction(null)}>Cancel</Button>
+              <Button className="flex-1" onClick={submitAdd}><UserPlus className="h-4 w-4 mr-2" /> Add Employee</Button>
             </div>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setAction(null)}>Cancel</Button>
-            <Button onClick={submitAdd}><UserPlus className="h-4 w-4 mr-2" /> Add</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
 
       {/* Terminate confirmation */}
       <AlertDialog open={action === "terminate"} onOpenChange={(o) => !o && setAction(null)}>
