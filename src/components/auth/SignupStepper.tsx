@@ -33,13 +33,14 @@ const SignupStepper = ({ onBack }: SignupStepperProps) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
 
+  const [accepted, setAccepted] = useState(false);
+
   // Form data
   const [data, setData] = useState({
     companyName: "", companyEmail: "", username: "",
     industry: "", companySize: "", website: "",
     country: "", state: "", city: "", address: "",
     password: "", confirmPassword: "",
-    plan: "business",
   });
 
   const set = (field: string, value: string) => setData((d) => ({ ...d, [field]: value }));
@@ -50,10 +51,11 @@ const SignupStepper = ({ onBack }: SignupStepperProps) => {
       case 1: return data.industry && data.companySize;
       case 2: return data.country && data.state && data.city;
       case 3: return passwordRules.every((r) => r.test(data.password)) && data.password === data.confirmPassword;
-      case 4: return !!data.plan;
+      case 4: return accepted;
       default: return false;
     }
   };
+
 
   const handleCreate = () => {
     setLoading(true);
