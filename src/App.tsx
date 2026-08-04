@@ -7,7 +7,9 @@ import Index from "./pages/Index.tsx";
 import Auth from "./pages/Auth.tsx";
 import VerifyOTP from "./pages/VerifyOTP.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
+import Terms from "./pages/Terms.tsx";
 import NotFound from "./pages/NotFound.tsx";
+
 import DashboardLayout from "./components/dashboard/DashboardLayout.tsx";
 import DashboardOverview from "./pages/dashboard/DashboardOverview.tsx";
 import Settings from "./pages/dashboard/Settings.tsx";
@@ -62,6 +64,8 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/verify-otp" element={<VerifyOTP />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/terms" element={<Terms />} />
+
 
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardOverview />} />
