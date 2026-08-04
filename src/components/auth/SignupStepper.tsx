@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Check, X, ChevronLeft } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-const STEPS = ["Basic Info", "Details", "Location", "Security", "Plan"];
+const STEPS = ["Basic Info", "Details", "Location", "Security", "Terms"];
 
 const industries = ["Technology", "Finance", "Healthcare", "Education", "Manufacturing", "Retail", "Other"];
 const companySizes = ["1-10", "11-50", "51-200", "201-500", "500+"];
-const plans = [
-  { id: "starter", name: "Starter", price: "₦15,000/mo", desc: "Up to 5 job posts" },
-  { id: "business", name: "Business", price: "₦45,000/mo", desc: "Unlimited posts + AI ranking" },
-  { id: "enterprise", name: "Enterprise", price: "Custom", desc: "Full API access + support" },
+
+const consentPoints = [
+  "You are a legally registered business entity, or authorized to act on behalf of one.",
+  "You have the authority to bind your Company to this agreement.",
+  "You will use candidate and employee data only for legitimate hiring and HR purposes.",
 ];
 
 const passwordRules = [
@@ -19,6 +20,7 @@ const passwordRules = [
   { label: "Contains a number", test: (p: string) => /\d/.test(p) },
   { label: "Contains uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
 ];
+
 
 interface SignupStepperProps {
   onBack: () => void;
