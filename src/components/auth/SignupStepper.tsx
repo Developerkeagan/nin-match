@@ -182,26 +182,46 @@ const SignupStepper = ({ onBack }: SignupStepperProps) => {
         )}
 
         {step === 4 && (
-          <div className="flex flex-col gap-3 reveal-up">
-            {plans.map((p) => (
-              <button
-                key={p.id}
-                onClick={() => set("plan", p.id)}
-                className={`text-left p-4 border transition-all duration-200 ${
-                  data.plan === p.id
-                    ? "border-primary bg-primary/5 shadow-sm"
-                    : "border-border hover:border-primary/30"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-display font-semibold">{p.name}</span>
-                  <span className="text-sm font-bold text-primary">{p.price}</span>
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">{p.desc}</p>
-              </button>
-            ))}
+          <div className="flex flex-col gap-5 reveal-up">
+            <div>
+              <h3 className="font-display font-semibold">Terms and Conditions</h3>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Before creating your account, please confirm you agree to the Hiravel
+                Terms and Conditions and Privacy Policy.
+              </p>
+            </div>
+
+            <ul className="space-y-2.5 border-l-2 border-border pl-4">
+              {consentPoints.map((c) => (
+                <li key={c} className="flex gap-2 text-xs text-muted-foreground">
+                  <Check size={14} className="mt-0.5 shrink-0 text-primary" />
+                  {c}
+                </li>
+              ))}
+            </ul>
+
+            <label className="flex cursor-pointer items-start gap-3 border border-border p-4 transition-colors hover:border-primary/40">
+              <input
+                type="checkbox"
+                checked={accepted}
+                onChange={(e) => setAccepted(e.target.checked)}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-primary cursor-pointer"
+              />
+              <span className="text-xs leading-relaxed text-muted-foreground">
+                I have read and agree to the{" "}
+                <Link
+                  to="/terms"
+                  target="_blank"
+                  className="font-semibold text-primary underline underline-offset-2"
+                >
+                  Terms and Conditions
+                </Link>{" "}
+                of Hiravel, a product of Keatek.
+              </span>
+            </label>
           </div>
         )}
+
       </div>
 
       {/* Navigation buttons */}
