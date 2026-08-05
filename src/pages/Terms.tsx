@@ -255,7 +255,10 @@ const Terms = () => {
       <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur-md">
         <div className="container flex h-16 items-center justify-between">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              if (window.history.length > 1) navigate(-1);
+              else navigate("/auth");
+            }}
             className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             <ChevronLeft size={16} /> Back

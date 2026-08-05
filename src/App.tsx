@@ -21,6 +21,7 @@ import Promotions from "./pages/dashboard/Promotions.tsx";
 import Billing from "./pages/dashboard/Billing.tsx";
 import Analytics from "./pages/dashboard/Analytics.tsx";
 import Notifications from "./pages/dashboard/Notifications.tsx";
+import Support from "./pages/dashboard/Support.tsx";
 import CompanyProfile from "./pages/dashboard/CompanyProfile.tsx";
 import AdminLayout from "./components/admin/AdminLayout.tsx";
 import AdminOverview from "./pages/admin/AdminOverview.tsx";
@@ -77,6 +78,7 @@ const App = () => (
             <Route path="billing" element={<Billing />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="notifications" element={<Notifications />} />
+            <Route path="support" element={<Support />} />
             <Route path="profile" element={<CompanyProfile />} />
             <Route path="settings" element={<Settings />} />
           </Route>

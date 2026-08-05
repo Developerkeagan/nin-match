@@ -44,6 +44,7 @@ import {
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import PromotionsAnalytics from "./PromotionsAnalytics";
 
 // ── Types ──────────────────────────────────────────────────────────────
 type Platform = "twitter" | "instagram" | "telegram";
@@ -187,6 +188,7 @@ function TelegramPreview({ config }: { config: PromotionConfig }) {
 // ── Main Page ──────────────────────────────────────────────────────────
 const Promotions = () => {
   const isMobile = useIsMobile();
+  const [view, setView] = useState<"create" | "all">("create");
   const [config, setConfig] = useState<PromotionConfig>({
     media: null,
     mediaPreviewUrl: null,
@@ -469,13 +471,32 @@ const Promotions = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Promotions</h1>
-        <p className="text-muted-foreground text-sm mt-1">Create and manage promotional campaigns</p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Promotions</h1>
+          <p className="text-muted-foreground text-sm mt-1">Create campaigns and track how they perform</p>
+        </div>
+        <div className="inline-flex border">
+          {([
+            { id: "create", label: "Create campaign" },
+            { id: "all", label: "All promotions" },
+          ] as const).map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setView(t.id)}
+              className={`px-4 py-2 text-xs font-semibold transition-colors ${
+                view === t.id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Layout */}
-      {isMobile ? (
+      {view === "all" ? (
+        <PromotionsAnalytics />
+      ) : isMobile ? (
         <div className="space-y-8">
           {ConfigPanel}
           <Separator />
