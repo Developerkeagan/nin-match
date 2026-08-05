@@ -47,7 +47,7 @@ const SignupStepper = ({ onBack }: SignupStepperProps) => {
 
   const canNext = () => {
     switch (step) {
-      case 0: return data.companyName && data.companyEmail && data.username;
+      case 0: return !!(data.companyName && data.companyEmail && /^[a-zA-Z0-9_-]{3,}$/.test(data.username));
       case 1: return data.industry && data.companySize;
       case 2: return data.country && data.state && data.city;
       case 3: return passwordRules.every((r) => r.test(data.password)) && data.password === data.confirmPassword;
