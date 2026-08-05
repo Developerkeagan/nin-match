@@ -44,6 +44,7 @@ import {
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import PromotionsAnalytics from "./PromotionsAnalytics";
 
 // ── Types ──────────────────────────────────────────────────────────────
 type Platform = "twitter" | "instagram" | "telegram";
@@ -187,6 +188,7 @@ function TelegramPreview({ config }: { config: PromotionConfig }) {
 // ── Main Page ──────────────────────────────────────────────────────────
 const Promotions = () => {
   const isMobile = useIsMobile();
+  const [view, setView] = useState<"create" | "all">("create");
   const [config, setConfig] = useState<PromotionConfig>({
     media: null,
     mediaPreviewUrl: null,
