@@ -9,6 +9,7 @@ import {
   BarChart3,
   Bell,
   Settings,
+  LifeBuoy,
   LogOut,
   ChevronUp,
 } from "lucide-react";
@@ -45,6 +46,7 @@ const navItems = [
   { title: "Billing", url: "/dashboard/billing", icon: CreditCard, desc: "Plans, credits & invoices" },
   { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3, desc: "Performance insights" },
   { title: "Notifications", url: "/dashboard/notifications", icon: Bell, desc: "Stay updated on activity" },
+  { title: "Customer Care", url: "/dashboard/support", icon: LifeBuoy, desc: "Tickets & live support" },
   { title: "Settings", url: "/dashboard/settings", icon: Settings, desc: "Account preferences" },
 ];
 
