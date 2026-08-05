@@ -108,7 +108,17 @@ const SignupStepper = ({ onBack }: SignupStepperProps) => {
           <div className="flex flex-col gap-5 reveal-up">
             <input value={data.companyName} onChange={(e) => set("companyName", e.target.value)} placeholder="Company Name" className={inputClass} />
             <input value={data.companyEmail} onChange={(e) => set("companyEmail", e.target.value)} placeholder="Company Email" type="email" className={inputClass} />
-            <input value={data.username} onChange={(e) => set("username", e.target.value)} placeholder="Username" className={inputClass} />
+            <div className="space-y-1">
+              <input
+                value={data.username}
+                onChange={(e) => set("username", e.target.value.replace(/[^a-zA-Z0-9_-]/g, ""))}
+                placeholder="Username"
+                className={inputClass}
+              />
+              <p className="text-[11px] text-muted-foreground">
+                Letters and numbers only — the only special characters allowed are <span className="font-semibold text-foreground">-</span> and <span className="font-semibold text-foreground">_</span>
+              </p>
+            </div>
           </div>
         )}
 
